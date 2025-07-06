@@ -1,0 +1,114 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fdfdfd;
+  margin: 20px;
+  padding: 20px;
+}
+
+header {
+  background-color: #71abdf;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  font-size: large;
+  font-family: 'Raleway', sans-serif;
+
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+details {
+
+  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+summary {
+  font-size: 1.25em;
+  font-weight: bold;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating {
+  font-weight: bold;
+  color:black;
+}
+
+.type_of_cusine {
+  font-style: italic;
+  color: #555;
+  margin-top: 5px;
+}
+
+.comment {
+  font-weight: bold;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+
+/* === Glide Base Layout === */
+.glide {
+  max-width: 100%;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+/* === Slides === */
+.glide__slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
+
+}
+
+.glide__slide img {
+  max-height: 70vh;           /* Max height = 70% of the viewport */
+  max-width: 80vw;               /* Let width scale naturally */
+  display: block;
+  margin: auto;
+  object-fit: contain;        /* Show entire image, no cropping */
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* === Arrows === */
+.glide__arrows {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.glide__arrow {
+  background-color: #eee;
+  border: none;
+  padding: 6px 12px;
+  margin: 0 10px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.glide__arrow:hover {
+  background-color: #ccc;
+}
+@media (max-width: 768px) {
+  .glide__slide img {
+    max-height: 500px;
+  }
+  .glide__arrow {
+    font-size: 1.2rem;
+    padding: 5px 10px;
+  }
+}
