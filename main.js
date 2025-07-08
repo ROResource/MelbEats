@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
           type: 'carousel',
           perView: 1,
           focusAt: 'center',
-          gap: 10
+          gap: 1,
         }).mount();
       });
 
@@ -30,4 +30,5 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
       console.error('Error loading restaurant list:', error);
     });
+
 });
