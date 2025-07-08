@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
 
 
@@ -15,11 +16,14 @@
     <header>
         <div id="header">
             <h1>MelbEats</h1>
-            <p>A collection of our favourite dining spots over the year.</p>
         </div>
     </header>
     <main>
+        <div id="map"></div>
         <div id="restaurant-list"></div>
     </main>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="map.js"></script>
+    <script src="restaurant_markers.js"></script>
 </body>
 </html>

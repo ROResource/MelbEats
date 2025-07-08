@@ -8,7 +8,7 @@ pics_dir = os.path.join(script_dir, "pics")
 output_file = os.path.join(script_dir, "restaurant_panels.html")
 
 # === Load Excel ===
-df = pd.read_excel(excel_file, header=0, usecols=[0, 1, 2, 3])  # Name, Rating, Type, Comment
+df = pd.read_excel(excel_file, header=0, usecols=[0, 1, 2, 3, 6])  # Name, Rating, Style, Comment
 
 # === Build HTML ===
 html = ""
@@ -16,8 +16,11 @@ html = ""
 for index, row in df.iterrows():
     name = str(row["Name"]).strip()
     rating = str(row["Rating"]).strip()
-    type_of_cuisine = str(row["Type of Cuisine"]).strip()
+    style = str(row["Style"]).strip()
     comment = str(row["Comment"]).strip()
+    map_url = str(row ["Map"]).strip()
+
+    map_link = f'<a href="{map_url}" target="_blank" class="map-link">View on Google Maps</a>' if map_url else ""
 
     folder_path = os.path.join(pics_dir, name)
     image_files = []
@@ -31,15 +34,17 @@ for index, row in df.iterrows():
     glide_id = f"gallery-{name.replace(' ', '_')}"
 
     html += f"""
-<details id="{name}">
+  <details id="{name}">
   <summary>
     <div class="restaurant_name">{name}</div>
     <div class="rating">{rating}</div>
   </summary>
-  <div class="type_of_cusine">{type_of_cuisine}</div>
+  <div class="restaurant_info">
+    <div class="type_of_cusine">{style} </div>
+    <div class="link"> {map_link}</div>
+  </div>
   <div class="comment">"{comment}"</div>
 """
-
     if image_files:
         html += f"""
   <div class="glide" id="{glide_id}">

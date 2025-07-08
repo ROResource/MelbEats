@@ -15,17 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       // ✅ Ensure only one <details> is open at a time
-      document.querySelectorAll("details").forEach((panel) => {
-        panel.addEventListener("toggle", () => {
-          if (panel.open) {
-            document.querySelectorAll("details").forEach((otherPanel) => {
-              if (otherPanel !== panel && otherPanel.open) {
-                otherPanel.removeAttribute("open");
-              }
-            });
-          }
-        });
+document.querySelectorAll("details").forEach((panel) => {
+  panel.addEventListener("toggle", () => {
+    if (panel.open) {
+      // Close other panels
+      document.querySelectorAll("details").forEach((otherPanel) => {
+        if (otherPanel !== panel && otherPanel.open) {
+          otherPanel.removeAttribute("open");
+        }
       });
+
+      // Scroll this panel to center
+      panel.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    }
+  });
+});
     })
     .catch(error => {
       console.error('Error loading restaurant list:', error);
