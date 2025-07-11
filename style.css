@@ -142,7 +142,8 @@ summary {
 /* Full width map at top of the page */
 #map {
   flex-grow: 1;
-  min-height: 0;
+  min-height: 70dvh;
+  max-height: 70dvh;
   width: 96%;
   margin: 0 auto;
   border-radius: 8px;
@@ -164,7 +165,7 @@ summary {
   padding: 10px 16px;
   max-height: 40px;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 1;
 }
 
 
@@ -239,6 +240,22 @@ details div {
   position: relative;
   z-index: 2;
 }
+.filters details[open] > .filter-group {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: max-content;           /* ✅ allow it to grow with grid */
+  min-width: 400px;             /* ✅ prevent column collapse */
+  max-width: 90vw; 
+  max-height: 70dvh;             /* ✅ avoid overflowing screen */
+  background: white;
+  padding: 12px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  box-sizing: border-box;
+  overflow-x: auto;             /* ✅ scroll if needed */
+}
 
 
 .filters details {
@@ -261,30 +278,31 @@ details div {
 }
 
 
-.filters details[open] > .filter-group {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;                    /* ✅ Match width of the parent panel only */
-  background: white;
-  padding: 12px;
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  box-sizing: border-box;
-}
 
 
 
 .filter-group {
   display: grid;
   grid-template-columns: repeat(3, minmax(140px, 1fr));
-  gap: 10px 20px;        /* 10px rows, 20px between columns */
+  gap: 10px 20px;
   padding: 14px 16px;
-  white-space: normal;
-  overflow-wrap: anywhere;
   box-sizing: border-box;
+  min-width: 400px;
+  width: max-content;        /* grow to fit grid content */
+  max-width: 90vw;           /* optional: cap at viewport */
+  overflow-x: auto;
+  max-height: 70dvh;
+  overflow-x: auto;
+  overflow-y: auto;
+  min-width: 100%;
 }
+
+
+.filter-group::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
 
 /* === REGION SUBGROUP CONTAINER === */
 .filter-subgroup {
