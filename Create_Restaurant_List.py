@@ -19,7 +19,7 @@ output_json = os.path.join(script_dir, "restaurant_data.json")
 pics_dir = os.path.join(script_dir, "pics")
 
 # === LOAD DATA ===
-df = pd.read_excel(input_excel, header=0, usecols=[0,1,2,3,4,5,6,7,8])
+df = pd.read_excel(input_excel, header=0, usecols=[0,1,2,3,4,5,6,7,8,9])
 df.columns = [str(col).strip().lower().replace(" ", "_") for col in df.columns]
 group_key = df.columns[0]
 
