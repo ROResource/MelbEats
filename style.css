@@ -313,7 +313,7 @@ details div {
 }
 
 .filter-master {
-          /* Stretch across both columns in filter-group */
+  grid-column: span 3;
   text-align: left;
   margin-bottom: 12px;
   font-weight: bold;
