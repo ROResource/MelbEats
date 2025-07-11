@@ -1,8 +1,17 @@
-body {
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
   font-family: Arial, sans-serif;
   background-color: #fdfdfd;
-  margin: 3dvh;
+  overflow-y: auto;
 }
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 
 header {
   Margin-top: 0px;
@@ -20,15 +29,7 @@ header {
 .resturant-list {
   margin-top: 20px;
 }
-#FULLRL {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
+
 details.restaurants {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -38,10 +39,7 @@ details.restaurants {
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-#FULLRL {
-  margin-top: 0px;
 
-}
 #FRL {
   margin-top: 5px;
   display: flex;
@@ -143,14 +141,43 @@ summary {
 
 /* Full width map at top of the page */
 #map {
-  height: 70dvh;;
-  width: 100%;
-  margin-bottom: 2dvh;
-  margin-top: 0px;
+  flex-grow: 1;
+  min-height: 0;
+  width: 96%;
+  margin: 0 auto;
   border-radius: 8px;
   border: 1px solid #ccc;
-  z-index: 0;
-  
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+#FULLRL {
+  position: fixed;
+  bottom: 1dvh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 16px;
+  max-height: 40px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+
+#FULLRL[open] {
+  position: static;
+  transform: none;
+  margin: 20px auto;
+  width: 90%;
+  max-height: none;
+  overflow: visible;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: auto;
 }
 
 /* Optional: style your content area */
@@ -202,9 +229,10 @@ details div {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  width: 100%;
+  width: 95%;
   box-sizing: border-box;
-  margin: 1dvh 0;
+  margin: 0 auto;
+  margin-bottom: 3px;
   border: 1px solid #ddd;
   padding: 2px;
   gap: 12px;
@@ -317,21 +345,26 @@ details div {
   width: 100vw;
   height: 100vh;
   background: rgba(0,0,0,0.6);
-  backdrop-filter: blur(3px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 20px;
+  backdrop-filter: blur(4px);
   z-index: 2000;
-  overflow-y: auto;
+  display: flex;
+  align-items: center;       /* ✅ vertical centering */
+  justify-content: center;   /* ✅ horizontal centering */       /* optional breathing room on small screens */
+  overflow-y: auto;          /* in case content overflows vertically */
 }
 
+
 .overlay > details {
-  max-width: 80vw;
-  width: 90%;
+  max-width: 80dvw;
+  width: 90vw;
   background: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+}
+.overlay > details > summary {
+  pointer-events: none;
+  user-select: none;
 }
 
 .overlay.hidden {

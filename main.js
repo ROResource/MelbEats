@@ -281,3 +281,67 @@ masterCheckbox.addEventListener("change", () => {
   if (window.updateMarkers) window.updateMarkers();
 });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fullListPanel = document.getElementById("FULLRL");
+
+  if (fullListPanel) {
+    fullListPanel.addEventListener("toggle", () => {
+      if (fullListPanel.open) {
+        document.body.style.overflowY = "auto";   // enable scroll
+      } else {
+        document.body.style.overflowY = "hidden"; // lock to 1 viewport
+      }
+    });
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fullPanel = document.getElementById("FULLRL");
+  const map = document.getElementById("map");
+
+  if (fullPanel && map) {
+    fullPanel.addEventListener("toggle", () => {
+      if (fullPanel.open) {
+        map.style.marginBottom = "10px"; // smaller margin when panel is open
+      } else {
+        map.style.marginBottom = "18dvh"; // allow space for docked panel
+      }
+    });
+
+    // Initial state setup
+    if (fullPanel.open) {
+      map.style.marginBottom = "10px";
+    } else {
+      map.style.marginBottom = "18dvh";
+    }
+  }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const fullList = document.getElementById("FULLRL");
+
+  if (fullList) {
+    fullList.addEventListener("toggle", () => {
+      if (fullList.open) {
+        document.body.style.overflowY = "auto"; // allow scroll when list is open
+      } else {
+        document.body.style.overflowY = "hidden"; // lock scroll when closed
+      }
+    });
+
+    // Apply initial state on page load
+    if (fullList.open) {
+      document.body.style.overflowY = "auto";
+    } else {
+      document.body.style.overflowY = "hidden";
+    }
+  }
+});
+const fullList = document.getElementById("FULLRL");
+
+fullList.addEventListener("toggle", () => {
+  if (!fullList.open) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+});
