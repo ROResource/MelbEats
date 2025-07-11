@@ -295,6 +295,7 @@ details div {
   overflow-x: auto;
   overflow-y: auto;
   min-width: 100%;
+  z-index: 1000;
 }
 
 
