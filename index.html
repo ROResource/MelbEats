@@ -10,50 +10,49 @@
             <h1>MelbEats</h1>
         </div>
     </header>
-  <main>
-    <div class="filters">
-    <details class="fltr">
-      <summary>Style</summary>
-      <div id="style" class="filter-group"></div>
-    </details>
+    <main>
+      <div class="filters">
+      <details class="fltr">
+        <summary>Style</summary>
+        <div id="style" class="filter-group"></div>
+      </details>
 
-    <details class="fltr">
-      <summary>Occasion</summary>
-      <div id="occasion" class="filter-group"></div>
-    </details>
+      <details class="fltr">
+        <summary>Occasion</summary>
+        <div id="occasion" class="filter-group"></div>
+      </details>
 
-    <details class="fltr">
-      <summary>Rating</summary>
-      <div id="rating" class="filter-group"></div>
-    </details>
+      <details class="fltr">
+        <summary>Rating</summary>
+        <div id="rating" class="filter-group"></div>
+      </details>
 
-    <details class="fltr">
-      <summary>Price</summary>
-      <div id="price" class="filter-group"></div>
-    </details>
-    </div>
-    <div id="map"></div>
-    
-    <details id="FULLRL">
-        <summary id="FRL"> Full Restaurant List</summary>
-        <div id="restaurant-list"></div>
-    </details>
-
-    <div id="restaurant-overlay" class="overlay hidden"></div>
-
-</main>
+      <details class="fltr">
+        <summary>Price</summary>
+        <div id="price" class="filter-group"></div>
+      </details>
+      </div>
+      <div id="map"></div>
+      <button id="see_full_list">See Full List</button>
+    </main>
+  <div id="restaurant-overlay" class="map-overlay hidden"></div>
+  
+  <div id="list_container" class="list-overlay hidden">
+  <div id="list-box">
+  <div id="restaurant-list"></div> </div>
+  </div>
     <!-- ✅ CSS first -->
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-<!-- ✅ Then JS libraries -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
+  <!-- ✅ Then JS libraries -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
 
-<!-- ✅ Then your custom JS (map.js should come before main.js) -->
-<script src="new_map.js"></script> <!-- or map.js if renamed -->
-<script src="main.js"></script>    
+  <!-- ✅ Then your custom JS (map.js should come before main.js) -->
+  <script src="new_map.js"></script> <!-- or map.js if renamed -->
+  <script src="main.js"></script>    
 </body>
 </html>

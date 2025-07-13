@@ -7,11 +7,13 @@ document.addEventListener('DOMContentLoaded', () => {
       populateFilters(data);
       window.createMarkers(data);
       window.updateMarkers();
+      listoverlay();
     })
     .catch(err => {
       console.error("Failed to load restaurant data:", err);
     });
 });
+
 
 // === RENDER RESTAURANTS ===
 function renderRestaurants(data) {
@@ -27,24 +29,24 @@ function renderRestaurants(data) {
       : "";
 
     let html = `
-<details class="restaurants" id="${name}">
-  <summary>
-    <div class="restaurant_name">${name}</div>
-    <div class="rating">${rating ?? ""}</div>
-  </summary>
-  <div class="restaurant_info">
-    <div class="type_of_cusine">${style}</div>
-    <div class="link">${mapLink}</div>
-  </div>
-  <div class="comment">"${comment}"</div>
-`;
+  <details class="restaurants" id="${name}">
+    <summary>
+      <div class="restaurant_name">${name}</div>
+      <div class="rating">${rating ?? ""}</div>
+    </summary>
+    <div class="restaurant_info">
+      <div class="type_of_cusine">${style}</div>
+      <div class="link">${mapLink}</div>
+    </div>
+    <div class="comment">"${comment}"</div>
+  `;
 
-    if (images.length > 0) {
-      html += `
-  <div class="glide" id="${glideId}">
-    <div class="glide__track" data-glide-el="track">
-      <ul class="glide__slides">
-`;
+      if (images.length > 0) {
+        html += `
+    <div class="glide" id="${glideId}">
+      <div class="glide__track" data-glide-el="track">
+        <ul class="glide__slides">
+  `;
 
       images.forEach(imgPath => {
         html += `<li class="glide__slide"><img src="${imgPath}" alt="${name} photo"></li>\n`;
@@ -58,20 +60,23 @@ function renderRestaurants(data) {
       <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
     </div>
   </div>
-`;
-    }
+  `;
+      }
 
-    html += `</details>\n\n`;
-    container.insertAdjacentHTML("beforeend", html);
-  });
+      html += `</details>\n\n`;
+      container.insertAdjacentHTML("beforeend", html);
+    });
 
   document.querySelectorAll('.glide').forEach((el) => {
-    new Glide(`#${el.id}`, {
-      type: 'carousel',
-      perView: 1,
-      focusAt: 'center',
-      gap: 1,
-    }).mount();
+  const instance = new Glide(`#${el.id}`, {
+    type: 'carousel',
+    perView: 1,
+    focusAt: 'center',
+    gap: 1,
+  });
+
+  instance.mount();
+  el._glideInstance = instance; // 🔑 Save instance directly on the element
   });
 
   document.querySelectorAll("details.restaurants").forEach((panel) => {
@@ -282,66 +287,32 @@ masterCheckbox.addEventListener("change", () => {
 });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const fullListPanel = document.getElementById("FULLRL");
+function listoverlay() {
+  const overlay = document.getElementById("list_container");
+  const trigger = document.getElementById("see_full_list");
 
-  if (fullListPanel) {
-    fullListPanel.addEventListener("toggle", () => {
-      if (fullListPanel.open) {
-        document.body.style.overflowY = "auto";   // enable scroll
-      } else {
-        document.body.style.overflowY = "hidden"; // lock to 1 viewport
-      }
-    });
-  }
-});
+  if (!overlay || !trigger) return;
 
-document.addEventListener("DOMContentLoaded", () => {
-  const fullPanel = document.getElementById("FULLRL");
-  const map = document.getElementById("map");
+  trigger.addEventListener("click", () => {
+    overlay.classList.remove("hidden");
+    overlay.style.display = "flex";
 
-  if (fullPanel && map) {
-    fullPanel.addEventListener("toggle", () => {
-      if (fullPanel.open) {
-        map.style.marginBottom = "10px"; // smaller margin when panel is open
-      } else {
-        map.style.marginBottom = "18dvh"; // allow space for docked panel
-      }
-    });
 
-    // Initial state setup
-    if (fullPanel.open) {
-      map.style.marginBottom = "10px";
-    } else {
-      map.style.marginBottom = "18dvh";
+    // Delay to allow overlay to render
+    setTimeout(() => {
+      document.querySelectorAll('.glide').forEach((el) => {
+        if (el._glideInstance) {
+          el._glideInstance.update();
+        }
+      });
+    }, 100);
+  });
+
+  // Close when clicking outside content
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) {
+      overlay.classList.add("hidden");
+      overlay.style.display = "none"; // ✅ Reset display
     }
-  }
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const fullList = document.getElementById("FULLRL");
-
-  if (fullList) {
-    fullList.addEventListener("toggle", () => {
-      if (fullList.open) {
-        document.body.style.overflowY = "auto"; // allow scroll when list is open
-      } else {
-        document.body.style.overflowY = "hidden"; // lock scroll when closed
-      }
-    });
-
-    // Apply initial state on page load
-    if (fullList.open) {
-      document.body.style.overflowY = "auto";
-    } else {
-      document.body.style.overflowY = "hidden";
-    }
-  }
-});
-const fullList = document.getElementById("FULLRL");
-
-fullList.addEventListener("toggle", () => {
-  if (!fullList.open) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-});
+  });
+}
