@@ -6,7 +6,7 @@ const occasionIcons = {
   "Fine Dining": "💲",
   "Dinner": "🍴",
   "Brunch": "🍳",
-  "Cafe": "☕️",
+  "Café": "☕️",
   "Bar": "🍺",
   "Cocktails": "🍸",
   "Wine": "🍷",
