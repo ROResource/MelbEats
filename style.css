@@ -54,6 +54,7 @@ header {
   border: 1px solid #ccc;
   box-sizing: border-box;
   z-index: 1;
+  position: relative;
 }
 
   #see_full_list {
@@ -148,21 +149,28 @@ header {
 
 details div {
   user-select: none;
-
 }
 
+details.fltr summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* optional but harmless */
+  list-style: none;   /* optional: hides default ▸ arrow */
+  cursor: pointer;
+}
 
 .filters details[open] > .filter-group {
   position: absolute;
-  top: 100%;
   left: 0;
-  width: max-content;           /* ✅ allow it to grow with grid */
-  min-width: 400px;             /* ✅ prevent column collapse */
-  max-width: 90vw; 
+  width: max-content;           /* ✅ allow it to grow with grid */             /* ✅ prevent column collapse */
+  max-width: auto; 
   max-height: 70dvh;             /* ✅ avoid overflowing screen */
   background: white;
   padding: 12px;
   border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   box-sizing: border-box;
@@ -175,7 +183,7 @@ details div {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 6px 10px;
+  padding: 6px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
@@ -188,10 +196,6 @@ details div {
   font-size: 1rem;
   line-height: 1.4;
 }
-
-
-
-
 
 .filter-group {
   display: grid;
@@ -242,6 +246,17 @@ details div {
   white-space: normal;
   overflow-wrap: anywhere;
 }
+.select-all-label {
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  grid-column: span 3;
+}
+
+.select-all-label-styles {
+  background-color:#e0f0ff
+}
 
 .filter-master {
   grid-column: span 3;
@@ -251,7 +266,7 @@ details div {
 }
 
 .filter-master label {
-  font-weight: normal;
+  font-weight: bold;
   font-size: 0.95rem;
   cursor: pointer;
 }
@@ -264,10 +279,13 @@ details div {
   grid-template-columns: repeat(2, minmax(140px, 1fr));
 }
   .filter-master {
+  grid-column: span 2; 
+}
+  .select-all-label {
   grid-column: span 2;
-  
 }
 }
+
 /* === Overlay Panel === */
 .map-overlay {
   position: fixed;
@@ -433,3 +451,82 @@ summary {
 .glide__arrow:hover {
   background-color: #ccc;
 }
+
+.fltr[open] {
+  background-color: #e0f0ff; /* light blue shade for better readability */
+  border-color: #3399ff;
+}
+
+.icon-marker {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  text-align: center;
+  line-height: 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  font-weight: normal;
+  user-select: none;
+}
+
+
+/* Container to hold both buttons aligned top-right */
+.map-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  z-index: 1001; /* Must be higher than Leaflet controls */
+}
+
+/* Shared button styling */
+.map-button {
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  user-select: none;
+}
+
+
+.icon-marker[data-occasion="Brunch"] {
+  background-color: #daffcd;
+}
+.icon-marker[data-occasion="Fine Dining"] {
+  background-color: #504d4d;
+}
+.icon-marker[data-occasion="Cocktails"] {
+  background-color: #eb6391;
+}
+.icon-marker[data-occasion="Dinner"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Ramen"] {
+  background-color: #93aa3e;
+}
+.icon-marker[data-occasion="Sushi"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Cafe"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Lunch"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Quick Eats"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Bar"] {
+  background-color: #f0a500; /* light orange */
+}
+.icon-marker[data-occasion="Wine"] {
+  background-color: #a34f4f; /* light red */
+}
+

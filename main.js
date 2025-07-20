@@ -1,18 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   window.initMap();
+
   fetch("restaurant_data.json")
     .then(res => res.json())
     .then(data => {
+      window.restaurantData = data; // ✅ Needed for toggling
+
       renderRestaurants(data);
       populateFilters(data);
-      window.createMarkers(data);
-      window.updateMarkers();
+      window.createMarkers(data);       // ✅ This already calls updateMarkers()
       listoverlay();
+
+      window.setupResetFiltersButton(); // ✅ Must come after filters are populated
+      window.setupMarkerToggleButton(); // ✅ Needs DOM and data
     })
     .catch(err => {
       console.error("Failed to load restaurant data:", err);
     });
 });
+
 
 
 // === RENDER RESTAURANTS ===
@@ -148,7 +154,9 @@ function createCheckboxes(containerId, values) {
   selectAllCheckbox.type = "checkbox";
   selectAllCheckbox.name = `${containerId}-select-all`;
   selectAllCheckbox.classList.add("select-all");
-  selectAllCheckbox.checked = true;
+  selectAllCheckbox.checked = false;
+  selectAllLabel.classList.add("select-all-label");
+
 
   selectAllLabel.appendChild(selectAllCheckbox);
   selectAllLabel.append(" Select All");
@@ -171,7 +179,7 @@ function createCheckboxes(containerId, values) {
     checkbox.type = "checkbox";
     checkbox.name = containerId;
     checkbox.value = value;
-    checkbox.checked = true;
+    checkbox.checked = false;
 
     label.appendChild(checkbox);
     label.append(` ${value}`);
@@ -203,7 +211,7 @@ function createGroupedCheckboxes(containerId, data) {
   const masterCheckbox = document.createElement("input");
   masterCheckbox.type = "checkbox";
   masterCheckbox.classList.add("select-all-master");
-  masterCheckbox.checked = true;
+  masterCheckbox.checked = false;
 
   masterLabel.appendChild(masterCheckbox);
   masterLabel.append(" Select All Styles");
@@ -236,9 +244,10 @@ function createGroupedCheckboxes(containerId, data) {
     const selectAllCheckbox = document.createElement("input");
     selectAllCheckbox.type = "checkbox";
     selectAllCheckbox.classList.add("select-all-region");
-    selectAllCheckbox.checked = true;
+    selectAllCheckbox.checked = false;
     selectAllLabel.appendChild(selectAllCheckbox);
     selectAllLabel.append(" Select All");
+    selectAllLabel.classList.add("select-all-label-styles");
     regionContainer.appendChild(selectAllLabel);
     
     regionSelectAlls.push(selectAllCheckbox); // ✅ track region-level boxes
@@ -253,7 +262,7 @@ function createGroupedCheckboxes(containerId, data) {
       checkbox.type = "checkbox";
       checkbox.name = containerId;
       checkbox.value = style;
-      checkbox.checked = true;
+      checkbox.checked = false;
       allCheckboxes.push(checkbox);
 
       label.appendChild(checkbox);
@@ -316,3 +325,22 @@ function listoverlay() {
     }
   });
 }
+
+
+document.querySelectorAll(".filters details").forEach(details => {
+  details.addEventListener("toggle", () => {
+  const ref = document.querySelector("map");
+  const tgt = document.querySelector(".filters details[open] > .filter-group");
+
+if (ref && tgt) {
+  const refTop = ref.getBoundingClientRect().top;
+  tgt.style.top = `${refTop}px`;
+
+  const refHeight = ref.getBoundingClientRect().height;
+  tgt.style.maxHeight = `${refHeight}px`;
+} else {
+  console.warn("❗ Target or reference element not found for positioning.");
+}
+
+  });
+});

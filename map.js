@@ -1,5 +1,20 @@
 const allMarkers = [];
 let map = null;
+let showOccasionIcons = false;
+
+const occasionIcons = {
+  "Fine Dining": "💲",
+  "Dinner": "🍴",
+  "Brunch": "🍳",
+  "Cafe": "☕️",
+  "Bar": "🍺",
+  "Cocktails": "🍸",
+  "Wine": "🍷",
+  "Lunch": "🥪",
+  "Quick Eats": "🍔",
+  "Ramen": "🍜",
+  "Sushi": "🍣",
+};
 
 // Init map once — call this from main.js first
 function initMap() {
@@ -22,7 +37,7 @@ function createMarkers(restaurantData) {
       return;
     }
 
-    // 🔢 Colour logic
+    // 🔢 Colour logic (for rating-based markers)
     const rating = r.rating;
     let color;
     if (rating >= 85) color = '#27ae60';
@@ -30,15 +45,32 @@ function createMarkers(restaurantData) {
     else if (rating >= 68) color = '#f39c12';
     else color = '#c0392b';
 
+    // 🎭 Occasion emoji logic
+
+
+    // 🧩 Decide icon mode based on global toggle
+    let iconHTML, className;
+
+    if (showOccasionIcons) {
+      const occasion = r.occasion;
+      let emoji = occasionIcons[occasion] || "❓"; // <-- use `let` here
+      iconHTML = `<div class='icon-marker' data-occasion="${occasion}">${emoji}</div>`;
+      className = 'icon-marker-wrapper';
+    } else {
+      iconHTML = `<div class='rating-circle' style="background:${color}">${rating}</div>`;
+      className = 'rating-icon';
+    }
+
+
     // 📌 Create marker
     const marker = L.marker([r.latitude, r.longitude], {
       icon: L.divIcon({
-        className: 'rating-icon',
-        html: `<div class='rating-circle' style="background:${color}">${rating}</div>`
+        className,
+        html: iconHTML
       })
     }).addTo(map);
 
-    console.log("📍 Added marker for:", r.name, r.latitude, r.longitude); // ✅ Add this
+    console.log("📍 Added marker for:", r.name, r.latitude, r.longitude);
 
     marker.bindTooltip(`${r.name} (${r.style})`, { permanent: false });
     marker.restaurantData = r;
@@ -49,6 +81,7 @@ function createMarkers(restaurantData) {
 
   window.updateMarkers(); // ✅ Filter after creating all markers
 }
+
 function showPanel(name) {
   const target = document.getElementById(name);
   const overlay = document.getElementById("restaurant-overlay");
@@ -86,36 +119,6 @@ function showPanel(name) {
     }
   });
 }
-
-
-function showPanelold(name) {
-  const panels = document.querySelectorAll("details.restaurants");
-  const target = document.getElementById(name);
-  if (!target) return;
-
-  // 🔁 Open all parent <details> (recursive)
-  let parent = target.parentElement;
-  while (parent) {
-    if (parent.tagName.toLowerCase() === "details") {
-      parent.setAttribute("open", "");
-    }
-    parent = parent.parentElement;
-  }
-
-  // ❌ Close other restaurant panels (but not parents)
-  panels.forEach(panel => {
-    if (panel !== target && panel.hasAttribute("open")) {
-      panel.removeAttribute("open");
-    }
-  });
-
-  // ✅ Open the target panel itself
-  if (!target.hasAttribute("open")) target.setAttribute("open", "");
-
-  // 🔽 Scroll to it
-  target.scrollIntoView({ behavior: "smooth", block: "center" });
-}
-
 function updateMarkers() {
   const selectedStyles = getCheckedValues("style");
   const selectedOccasions = getCheckedValues("occasion");
@@ -128,6 +131,9 @@ function updateMarkers() {
     selectedPrices.length === 0 &&
     selectedRatings.length === 0;
 
+  const resetBtn = document.getElementById("reset-filters");
+  resetBtn.style.display = allEmpty ? "none" : "block";
+    
   allMarkers.forEach(marker => {
     const r = marker.restaurantData;
 
@@ -139,18 +145,50 @@ function updateMarkers() {
       return r.rating >= low && r.rating <= high;
     });
 
-    // ✅ Master control: only show if some filters are selected
-    const visible = !allEmpty && matchStyle && matchOccasion && matchPrice && matchRating;
+   
 
+   const visible = allEmpty || (matchStyle && matchOccasion && matchPrice && matchRating);
     if (visible && !map.hasLayer(marker)) marker.addTo(map);
     if (!visible && map.hasLayer(marker)) marker.remove();
   });
 }
-
-
-
 function getCheckedValues(name) {
   return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+}
+function setupResetFiltersButton() {
+  const resetBtn = document.getElementById("reset-filters");
+
+  if (!resetBtn) {
+    console.warn("⚠️ reset-filters button not found in DOM.");
+    return;
+  }
+
+  resetBtn.addEventListener("click", () => {
+    document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+    updateMarkers();
+  });
+}
+function setupMarkerToggleButton() {
+  const toggleBtn = document.getElementById("marker-toggle");
+
+  if (!toggleBtn) {
+    console.warn("⚠️ marker-toggle button not found in DOM.");
+    return;
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    if (!window.restaurantData) {
+      console.warn("⚠️ No restaurant data loaded.");
+      return;
+    }
+
+    showOccasionIcons = !showOccasionIcons;
+    toggleBtn.textContent = showOccasionIcons ? "Show Ratings" : "Show Icons";
+
+    allMarkers.forEach(m => map.removeLayer(m));
+    allMarkers.length = 0;
+    createMarkers(window.restaurantData);
+  });
 }
 
 // Expose functions globally
@@ -158,3 +196,5 @@ window.initMap = initMap;
 window.createMarkers = createMarkers;
 window.updateMarkers = updateMarkers;
 window.getCheckedValues = getCheckedValues;
+window.setupResetFiltersButton = setupResetFiltersButton;
+window.setupMarkerToggleButton = setupMarkerToggleButton;
