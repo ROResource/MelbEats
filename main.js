@@ -332,15 +332,11 @@ document.querySelectorAll(".filters details").forEach(details => {
   const ref = document.querySelector("map");
   const tgt = document.querySelector(".filters details[open] > .filter-group");
 
-if (ref && tgt) {
-  const refTop = ref.getBoundingClientRect().top;
-  tgt.style.top = `${refTop}px`;
+  if (ref && tgt) {
+    const refTop = ref.getBoundingClientRect().top;
+    tgt.style.top = `${refTop}px`;
 
-  const refHeight = ref.getBoundingClientRect().height;
-  tgt.style.maxHeight = `${refHeight}px`;
-} else {
-  console.warn("❗ Target or reference element not found for positioning.");
-}
-
-  });
+    const refHeight = ref.getBoundingClientRect().height;
+    tgt.style.maxHeight = `${refHeight}px`;
+  }});
 });
