@@ -530,3 +530,17 @@ summary {
   background-color: #a34f4f; /* light red */
 }
 
+@supports (-webkit-touch-callout: none) and (not (translate: none)) {
+ .map {
+  height: 60dvh;
+ }
+ details.restaurants {
+  max-height: 60dvh;
+}}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+
