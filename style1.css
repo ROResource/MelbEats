@@ -1,0 +1,554 @@
+html, body {
+  height: 100dvh;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #fdfdfd;
+  overflow-y: auto;
+  overflow-x:hidden;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  height: 89.5dvh;
+}
+
+
+header {
+  Margin: 0 auto;
+  Margin-top: 0.5dvh;
+  Margin-bottom: 0px;
+  background-color: #71abdf;
+  text-align: center;
+  border-radius: 8px;
+  font-family: 'Raleway', sans-serif;
+  height: 10dvh;
+  Width: 95%;
+  display: flex;
+  align-items: center;    /* Vertically center */
+  justify-content: center; /* Horizontally center */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  
+}
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: center;
+  width: 95%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  Height: 5dvh;
+  Margin-top: 2.5dvh;
+  Margin-bottom: 2.5dvh;
+}
+
+#map {
+  height: 70dvh;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  z-index: 1;
+  position: relative;
+}
+
+  #see_full_list {
+  Height:5dvh;
+  Margin: auto;
+  Margin-top: 2.5dvh;
+  Margin-bottom: 2dvh;
+  Border: 1px solid #ddd;
+  width: 95%;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;    /* Vertically center */
+  justify-content: center;
+  Box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  }
+
+@media (max-width: 1000px) {
+  .filters {
+    height: 10dvh;
+  }
+  .filters details {
+    flex: 1 1 calc(50% - 12px); /* 2 per row */
+  }
+  .filter-group {
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+  } 
+  .filter-master {
+  grid-column: span 2; 
+  }
+  #map {
+    height: 65dvh;
+  }}
+
+.comment {
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+  text-align: center;
+}
+
+
+
+
+/* Full width map at top of the page */
+
+
+
+/* Optional: style your content area */
+#content {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.rating-icon {
+  background: none;
+  border: none;
+}
+
+.rating-circle {
+  background-color: #2c3e50;        /* dark blue-grey */
+  color: #fff;
+  font-weight: bold;
+  font-size: 10px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease;
+}
+
+.rating-circle:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+.leaflet-tooltip .tooltip-box {
+  font-family: 'Raleway', sans-serif;
+  font-size: 35px;
+  padding: 4px 8px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  line-height: 1.4;
+}
+
+
+details div {
+  user-select: none;
+}
+
+details.fltr summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* optional but harmless */
+  list-style: none;   /* optional: hides default ▸ arrow */
+  cursor: pointer;
+}
+
+.filters details[open] > .filter-group {
+  position: absolute;
+  left: 0;
+  width: max-content;           /* ✅ allow it to grow with grid */             /* ✅ prevent column collapse */
+  max-width: auto; 
+  max-height: 70dvh;             /* ✅ avoid overflowing screen */
+  background: white;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  box-sizing: border-box;
+  overflow-x: auto;             /* ✅ scroll if needed */
+}
+
+
+.filters details {
+  flex: 1 1 20%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.filters summary {
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  padding: 6px 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.filter-group {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 10px 20px;
+  padding: 14px 16px;
+  box-sizing: border-box;
+  min-width: 400px;
+  width: max-content;        /* grow to fit grid content */
+  max-width: 90vw;           /* optional: cap at viewport */
+  overflow-x: auto;
+  max-height: 70dvh;
+  overflow-x: auto;
+  overflow-y: auto;
+  min-width: 100%;
+  z-index: 1000;
+}
+
+
+.filter-group::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+
+/* === REGION SUBGROUP CONTAINER === */
+.filter-subgroup {
+  margin-bottom: 10px;
+  break-inside: avoid;         /* Keeps subgroup from splitting across columns */
+}
+
+/* === REGION TITLE (e.g., "CBD", "Fitzroy") === */
+.filter-subgroup strong {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #444;
+}
+
+/* === INDIVIDUAL CHECKBOXES IN SUBGROUP === */
+.filter-subgroup label {
+  display: block;
+  margin: 2px 0;
+  font-size: 0.9rem;
+  cursor: pointer;
+  line-height: 1.4;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.select-all-label {
+  border-radius: 4px;
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  grid-column: span 3;
+}
+
+.select-all-label-styles {
+  background-color:#e0f0ff
+}
+
+.filter-master {
+  grid-column: span 3;
+  text-align: left;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.filter-master label {
+  font-weight: bold;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .filters details {
+    flex: 1 1 calc(50% - 12px); /* 2 per row */
+  }
+  .filter-group {
+  grid-template-columns: repeat(2, minmax(140px, 1fr));
+}
+  .filter-master {
+  grid-column: span 2; 
+}
+  .select-all-label {
+  grid-column: span 2;
+}
+}
+
+/* === Overlay Panel === */
+.map-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;       /* ✅ vertical centering */
+  justify-content: center;   /* ✅ horizontal centering */       /* optional breathing room on small screens */
+  overflow-y: auto;
+  overflow-x:hidden;          /* in case content overflows vertically */
+}
+
+
+.map-overlay > details {
+  max-width: 80dvw;
+  width: 90vw;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+
+}
+.map-overlay > details > summary {
+  pointer-events: none;
+  
+}
+
+.hidden {
+  display: none;
+}
+
+#list_container {
+  justify-content: center;
+  align-items: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;      /* center horizontally */
+}
+
+.list-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(4px);
+  z-index: 2100; /* Higher than map overlay */
+  display: none;             /* JS will override this */
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+#list-box {
+  Margin-top: 5dvh;
+  Height:auto;
+  width: 90%;
+  background:grey;
+  border-radius: 8px;
+  z-index: 2101;
+  padding-top: 2.5dvh;
+  padding-bottom: 2.5dvh;
+}
+details.restaurants {
+  margin: auto;
+  margin-top: 5dvh;
+  margin-bottom: 5dvh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  width: 90%;
+}
+
+summary {
+  font-size: 1.25em;
+  font-weight: bold;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.rating {
+  font-weight: bold;
+  color:black;
+}
+.restaurant_info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.type_of_cusine {
+  font-style: italic;
+  color: #555;
+}
+
+/* === Glide Base Layout === */
+.glide {
+  max-width: 100%;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+}
+
+.glide__slides {
+  
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+/* === Slides === */
+.glide__slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  Height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.glide__slide img {
+  max-height: 70vh;           /* Max height = 70% of the viewport */
+  max-width: 100%;               /* Let width scale naturally */
+  display: block;
+  margin: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  overflow: hidden;
+  
+}
+.glide_track {
+  display: flex;        /* Prevents wrapping */
+  justify-content: center;    /* Centers slides horizontally */
+  align-items: center;        /* Centers slides vertically */
+}
+/* === Arrows === */
+.glide__arrows {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.glide__arrow {
+  background-color: #eee;
+  border: none;
+  padding: 6px 12px;
+  margin: 0 10px;
+  font-size: 1.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.glide__arrow:hover {
+  background-color: #ccc;
+}
+
+.fltr[open] {
+  background-color: #e0f0ff; /* light blue shade for better readability */
+  border-color: #3399ff;
+}
+
+.icon-marker {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  text-align: center;
+  line-height: 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  font-weight: normal;
+  user-select: none;
+}
+
+
+/* Container to hold both buttons aligned top-right */
+.map-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px; /* Space between buttons */
+  z-index: 1001; /* Must be higher than Leaflet controls */
+}
+
+/* Shared button styling */
+.map-button {
+  padding: 6px 12px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  user-select: none;
+}
+
+
+.icon-marker[data-occasion="Brunch"] {
+  background-color: #daffcd;
+}
+.icon-marker[data-occasion="Fine Dining"] {
+  background-color: #504d4d;
+}
+.icon-marker[data-occasion="Cocktails"] {
+  background-color: #eb6391;
+}
+.icon-marker[data-occasion="Dinner"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Ramen"] {
+  background-color: #93aa3e;
+}
+.icon-marker[data-occasion="Sushi"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Cafe"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Lunch"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Quick Eats"] {
+  background-color: #3e79aa;
+}
+.icon-marker[data-occasion="Bar"] {
+  background-color: #f0a500; /* light orange */
+}
+.icon-marker[data-occasion="Wine"] {
+  background-color: #a34f4f; /* light red */
+}
+
+@supports (-webkit-touch-callout: none) and (not (translate: none)) {
+ .map {
+  height: 60dvh;
+ }
+ details.restaurants {
+  max-height: 60dvh;
+}}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.zoom-container {
+  display: inline-block;           /* shrink-wrap image initially */
+  position: relative;
+  overflow: hidden;
+  max-height: 70vh;
+  max-width: 100%;
+}
+
+
+

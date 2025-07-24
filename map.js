@@ -28,7 +28,6 @@ function initMap() {
 }
 // Function to create markers from data
 function createMarkers(restaurantData) {
-  console.log("✅ createMarkers() called with", restaurantData.length, "restaurants");
 
   restaurantData.forEach(r => {
     // 🔎 Check lat/lng presence
@@ -70,8 +69,6 @@ function createMarkers(restaurantData) {
       })
     }).addTo(map);
 
-    console.log("📍 Added marker for:", r.name, r.latitude, r.longitude);
-
     marker.bindTooltip(`${r.name} (${r.style})`, { permanent: false });
     marker.restaurantData = r;
     allMarkers.push(marker);
@@ -81,7 +78,6 @@ function createMarkers(restaurantData) {
 
   window.updateMarkers(); // ✅ Filter after creating all markers
 }
-
 function showPanel(name) {
   const target = document.getElementById(name);
   const overlay = document.getElementById("restaurant-overlay");
@@ -96,29 +92,38 @@ function showPanel(name) {
   overlay.appendChild(clone);
   overlay.classList.remove("hidden");
 
-  // Now fix IDs + mount Glide AFTER insertion
+  // Find and mount each Glide in the clone
   const glideEls = clone.querySelectorAll('.glide');
   glideEls.forEach((glideEl, index) => {
-    // Generate a unique ID for the cloned glide element
     const newId = `glide-overlay-${name.replace(/\s+/g, '_')}-${index}`;
     glideEl.id = newId;
 
-    // ✅ Now safely mount Glide
-    new Glide(`#${newId}`, {
+    const instance = new Glide(`#${newId}`, {
       type: 'carousel',
       perView: 1,
       focusAt: 'center',
       gap: 1,
-    }).mount();
+    });
+
+    instance.mount();
+    glideEl._glideInstance = instance;
+
+    // ✅ Run Panzoom setup via global reference
+    if (typeof window.setupPanzoomWithSwipeToggle === "function") {
+      window.setupPanzoomWithSwipeToggle(glideEl);
+    } else {
+      console.warn("setupPanzoomWithSwipeToggle not found");
+    }
   });
 
-  // Close on clicking outside
-  overlay.addEventListener("click", e => {
+  // Close when clicking outside the cloned panel
+  overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       overlay.classList.add("hidden");
     }
   });
 }
+
 function updateMarkers() {
   const selectedStyles = getCheckedValues("style");
   const selectedOccasions = getCheckedValues("occasion");
