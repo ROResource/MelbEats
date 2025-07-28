@@ -87,9 +87,19 @@ function showPanel(name) {
   const clone = target.cloneNode(true);
   clone.setAttribute("open", "");
 
-  // Clear overlay and insert clone FIRST
+  // Clear overlay
   overlay.innerHTML = "";
+
+  // Insert the cloned panel
   overlay.appendChild(clone);
+
+  // ✅ Create and insert the Close Button
+  const closeBtn = document.createElement("button");
+  closeBtn.className = "close-btn";
+  closeBtn.innerHTML = "×";
+  closeBtn.onclick = () => overlay.classList.add("hidden");
+  overlay.appendChild(closeBtn); // Add after the clone so it's outside <details>
+
   overlay.classList.remove("hidden");
 
   // Find and mount each Glide in the clone

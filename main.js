@@ -40,6 +40,7 @@ function renderRestaurants(data) {
       <div class="restaurant_name">${name}</div>
       <div class="rating">${rating ?? ""}</div>
     </summary>
+    <div class="details-content">
     <div class="restaurant_info">
       <div class="type_of_cusine">${style}</div>
       <div class="link">${mapLink}</div>
@@ -55,7 +56,7 @@ function renderRestaurants(data) {
   `;
 
       images.forEach(imgPath => {
-        html += `<li class="glide__slide"><img src="${imgPath}" alt="${name} photo"></li>\n`;
+        html += `<li class="glide__slide"><div class="zoom-container"><img src="${imgPath}" alt="${name} photo"></div></li>\n`;
       });
 
       html += `
@@ -69,7 +70,7 @@ function renderRestaurants(data) {
   `;
       }
 
-      html += `</details>\n\n`;
+      html += `</div></details>\n\n`;
       container.insertAdjacentHTML("beforeend", html);
     });
 
@@ -82,7 +83,8 @@ function renderRestaurants(data) {
   });
 
   instance.mount();
-  el._glideInstance = instance; // 🔑 Save instance directly on the element
+  el._glideInstance = instance;
+  setupPanzoomWithSwipeToggle(el); 
   });
 
   document.querySelectorAll("details.restaurants").forEach((panel) => {
@@ -97,6 +99,26 @@ function renderRestaurants(data) {
       }
     });
   });
+    // When a panel is opened (clicked in the full list), mark its glide as visible and init panzoom
+  document.querySelectorAll("details.restaurants").forEach(panel => {
+    panel.addEventListener("toggle", () => {
+      if (panel.open) {
+        const glideEl = panel.querySelector('.glide');
+
+        if (glideEl) {
+          // Remove visibility tag from others
+          document.querySelectorAll('.glide').forEach(g => g.classList.remove('glide--visible'));
+
+          // Mark this one as visible
+          glideEl.classList.add('glide--visible');
+
+          // Setup panzoom for this one only (safe with internal init guard)
+          setupPanzoomWithSwipeToggle(glideEl);
+        }
+      }
+    });
+  });
+
 }
 // === POPULATE FILTERS ===
 function populateFilters(data) {
@@ -296,7 +318,7 @@ masterCheckbox.addEventListener("change", () => {
 });
 }
 
-function listoverlay() {
+function listoverlayold() {
   const overlay = document.getElementById("list_container");
   const trigger = document.getElementById("see_full_list");
 
@@ -325,6 +347,43 @@ function listoverlay() {
     }
   });
 }
+function listoverlay() {
+  const overlay = document.getElementById("list_container");
+  const trigger = document.getElementById("see_full_list");
+  const closeBtn = document.getElementById("listbtn");  // ✅ changed to global button
+
+  if (!overlay || !trigger || !closeBtn) return;
+
+  trigger.addEventListener("click", () => {
+    overlay.classList.remove("hidden");
+    overlay.style.display = "flex";
+
+    closeBtn.classList.remove("hidden");  // ✅ show the button
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    setTimeout(() => {
+      document.querySelectorAll('.glide').forEach((el) => {
+        if (el._glideInstance) el._glideInstance.update();
+      });
+    }, 100);
+  });
+
+  const closeOverlay = () => {
+    overlay.classList.add("hidden");
+    overlay.style.display = "none";
+
+    closeBtn.classList.add("hidden");  // ✅ hide the button again
+    document.body.style.overflow = "auto";
+    document.documentElement.style.overflow = "auto";
+  };
+
+  closeBtn.addEventListener("click", closeOverlay);
+
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+}
 
 
 document.querySelectorAll(".filters details").forEach(details => {
@@ -340,3 +399,126 @@ document.querySelectorAll(".filters details").forEach(details => {
     tgt.style.maxHeight = `${refHeight}px`;
   }});
 });
+
+
+function setupPanzoomWithSwipeToggle(el) {  
+  const glideInstance = el._glideInstance;
+  const swipe = glideInstance?._c?.Swipe;
+  if (!swipe) return;
+
+
+  // Optional: mark this as the "visible" glide
+  document.querySelectorAll('.glide').forEach(g => g.classList.remove('glide--visible'));
+  el.classList.add('glide--visible');
+
+  el.querySelectorAll('.zoom-container').forEach(container => {
+    const img = container.querySelector('img');
+    let activePointers = new Set();
+    let disableZoom = false;
+
+    function initPanzoom() {
+      const panzoom = Panzoom(img, {
+        maxScale: 5,
+        minScale: 1,
+        contain: 'outside'
+      });
+
+      container.panzoomInstance = panzoom;
+      container.dataset.initialScale = panzoom.getScale();
+      container.dataset.swipeLocked = "false";
+
+      img.addEventListener('load', () => {
+        container.dataset.initialScale = panzoom.getScale();
+      });
+
+      // Disable wheel zoom on single-finger
+      container.addEventListener('wheel', (e) => {
+        if (disableZoom) {
+          e.preventDefault();
+          return;
+        }
+        panzoom.zoomWithWheel(e);
+      }, { passive: false });
+
+      // Finger tracking
+      img.addEventListener('pointerdown', (e) => {
+        activePointers.add(e.pointerId);
+        if (activePointers.size === 1) disableZoom = true;
+      });
+
+      img.addEventListener('pointerup', (e) => {
+        activePointers.delete(e.pointerId);
+        if (activePointers.size === 0) disableZoom = false;
+      });
+
+      img.addEventListener('pointercancel', (e) => {
+        activePointers.delete(e.pointerId);
+        disableZoom = false;
+      });
+
+      // Block swipe from Glide when zoomed in
+      img.addEventListener('touchstart', (e) => {
+        const swipeLocked = container.dataset.swipeLocked === "true";
+        if (swipeLocked) {
+          e.stopPropagation();
+        }
+      }, { passive: false });
+
+      // Main logic: toggle swipe on zoom
+      img.addEventListener('panzoomchange', () => {
+        const current = panzoom.getScale();
+        const initial = parseFloat(container.dataset.initialScale) || 1;
+        const isZoomedIn = current > initial + 0.01;
+        const swipeLocked = container.dataset.swipeLocked === "true";
+
+        // ✅ Only apply to visible Glide
+        const isVisible = el.classList.contains('glide--visible');
+
+        if (!isVisible) return;
+
+        if (isZoomedIn && !swipeLocked) {
+          swipe.disabled = true;
+          swipe.disable();
+          container.dataset.swipeLocked = "true";
+          console.log(`[${img.src}] Swipe disabled (zoom in)`);
+        } else if (!isZoomedIn && swipeLocked) {
+          swipe.disabled = false;
+          swipe.enable();
+          container.dataset.swipeLocked = "false";
+          console.log(`[${img.src}] Swipe enabled (zoom reset)`);
+        }
+      });
+    }
+
+    if (img.complete) {
+      initPanzoom();
+    } else {
+      img.addEventListener('load', initPanzoom);
+    }
+  });
+
+  // Reset swipe and zoom on slide change
+  glideInstance.on('run.after', () => {
+    el.querySelectorAll('.zoom-container').forEach(container => {
+      const panzoom = container.panzoomInstance;
+      if (panzoom) panzoom.reset();
+      container.dataset.swipeLocked = "false";
+    });
+
+    swipe.disabled = false;
+    swipe.enable();
+    console.log("Swipe re-enabled (slide change)");
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+window.setupPanzoomWithSwipeToggle = setupPanzoomWithSwipeToggle;

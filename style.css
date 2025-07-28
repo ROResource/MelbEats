@@ -7,12 +7,12 @@ html, body {
   overflow-y: auto;
   overflow-x:hidden;
 }
+
 main {
   display: flex;
   flex-direction: column;
   height: 89.5dvh;
 }
-
 
 header {
   Margin: 0 auto;
@@ -101,12 +101,6 @@ header {
 }
 
 
-
-
-/* Full width map at top of the page */
-
-
-
 /* Optional: style your content area */
 #content {
   padding: 20px;
@@ -145,7 +139,6 @@ header {
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   line-height: 1.4;
 }
-
 
 details div {
   user-select: none;
@@ -303,7 +296,6 @@ details.fltr summary {
   overflow-x:hidden;          /* in case content overflows vertically */
 }
 
-
 .map-overlay > details {
   max-width: 80dvw;
   width: 90vw;
@@ -315,32 +307,25 @@ details.fltr summary {
 }
 .map-overlay > details > summary {
   pointer-events: none;
-  user-select: none;
+  
 }
 
 .hidden {
   display: none;
 }
 
-#list_container {
-  justify-content: center;
-  align-items: flex-start;
-  overflow-y: auto;
-  overflow-x: hidden;      /* center horizontally */
-}
-
 .list-overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.6);
   backdrop-filter: blur(4px);
-  z-index: 2100; /* Higher than map overlay */
-  display: none;             /* JS will override this */
-  justify-content: flex-start;
-  align-items: center;
+  z-index: 2100;
+  display: none;                  /* ❗️Important: add flex layout */
+  justify-content: center;
+  align-items: flex-start;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -348,7 +333,6 @@ details.fltr summary {
 
 #list-box {
   Margin-top: 5dvh;
-  Height:auto;
   width: 90%;
   background:grey;
   border-radius: 8px;
@@ -356,7 +340,11 @@ details.fltr summary {
   padding-top: 2.5dvh;
   padding-bottom: 2.5dvh;
 }
+
 details.restaurants {
+  overflow: hidden;          /* prevents spilling */
+  display: flex;
+  flex-direction: column;
   margin: auto;
   margin-top: 5dvh;
   margin-bottom: 5dvh;
@@ -366,6 +354,14 @@ details.restaurants {
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   width: 90%;
+}
+
+.details-content {
+  overflow-y: auto;
+  flex-grow: 1;              /* expands to fill space */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;                 /* optional spacing between items */
 }
 
 summary {
@@ -417,14 +413,12 @@ summary {
 }
 
 .glide__slide img {
-  max-height: 70vh;           /* Max height = 70% of the viewport */
+  max-height: 60vh;           /* Max height = 70% of the viewport */
   max-width: 100%;               /* Let width scale naturally */
   display: block;
   margin: auto;
   object-fit: contain;
-  border-radius: 8px;
-  overflow: hidden;
-  
+  overflow: hidden; 
 }
 .glide_track {
   display: flex;        /* Prevents wrapping */
@@ -500,7 +494,7 @@ summary {
   background-color: #daffcd;
 }
 .icon-marker[data-occasion="Fine Dining"] {
-  background-color: #504d4d;
+  background-color: #ffffff;
 }
 .icon-marker[data-occasion="Cocktails"] {
   background-color: #eb6391;
@@ -540,6 +534,34 @@ summary {
 
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+.zoom-container {
+  display: inline-block;           /* shrink-wrap image initially */
+  position: relative;
+  overflow: hidden;
+  max-height: 70vh;
+  max-width: 100%;
+  border: 5px solid black;
+  border-radius: 8px;
+}
+
+.close-btn {
+  position: fixed;         /* Fix to viewport */
+  top: 16px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: black;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 4000;            /* Must be higher than overlay */
+  user-select: none;
+}
+
+.close-btn:hover {
+  color: #ddd;
 }
 
 
