@@ -548,20 +548,22 @@ summary {
 
 .close-btn {
   position: fixed;         /* Fix to viewport */
-  top: 16px;
-  right: 20px;
-  background: none;
-  border: none;
+  top: 5px;
+  right: 15px;
+  background: white;
   color: black;
+  border-radius: 13px;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
   z-index: 4000;            /* Must be higher than overlay */
   user-select: none;
 }
-
+#listbtn {
+  display: hidden;
+}
 .close-btn:hover {
-  color: #ddd;
+  color: #f00000;
 }
 
 
