@@ -19,8 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-
-
 // === RENDER RESTAURANTS ===
 function renderRestaurants(data) {
   const container = document.getElementById("restaurant-list");
@@ -318,39 +316,10 @@ masterCheckbox.addEventListener("change", () => {
 });
 }
 
-function listoverlayold() {
-  const overlay = document.getElementById("list_container");
-  const trigger = document.getElementById("see_full_list");
-
-  if (!overlay || !trigger) return;
-
-  trigger.addEventListener("click", () => {
-    overlay.classList.remove("hidden");
-    overlay.style.display = "flex";
-
-
-    // Delay to allow overlay to render
-    setTimeout(() => {
-      document.querySelectorAll('.glide').forEach((el) => {
-        if (el._glideInstance) {
-          el._glideInstance.update();
-        }
-      });
-    }, 100);
-  });
-
-  // Close when clicking outside content
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      overlay.classList.add("hidden");
-      overlay.style.display = "none"; // ✅ Reset display
-    }
-  });
-}
 function listoverlay() {
   const overlay = document.getElementById("list_container");
   const trigger = document.getElementById("see_full_list");
-  const closeBtn = document.getElementById("listbtn");  // ✅ changed to global button
+  const closeBtn = document.getElementById("listbtn");
 
   if (!overlay || !trigger || !closeBtn) return;
 
@@ -358,7 +327,7 @@ function listoverlay() {
     overlay.classList.remove("hidden");
     overlay.style.display = "flex";
 
-    closeBtn.classList.remove("hidden");  // ✅ show the button
+    closeBtn.style.display = "flex";
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
 
@@ -373,7 +342,7 @@ function listoverlay() {
     overlay.classList.add("hidden");
     overlay.style.display = "none";
 
-    closeBtn.classList.add("hidden");  // ✅ hide the button again
+    closeBtn.style.display = "none"  // ✅ hide the button again
     document.body.style.overflow = "auto";
     document.documentElement.style.overflow = "auto";
   };
@@ -384,7 +353,6 @@ function listoverlay() {
     if (e.target === overlay) closeOverlay();
   });
 }
-
 
 document.querySelectorAll(".filters details").forEach(details => {
   details.addEventListener("toggle", () => {
@@ -399,7 +367,6 @@ document.querySelectorAll(".filters details").forEach(details => {
     tgt.style.maxHeight = `${refHeight}px`;
   }});
 });
-
 
 function setupPanzoomWithSwipeToggle(el) {  
   const glideInstance = el._glideInstance;
@@ -510,15 +477,5 @@ function setupPanzoomWithSwipeToggle(el) {
     console.log("Swipe re-enabled (slide change)");
   });
 }
-
-
-
-
-
-
-
-
-
-
 
 window.setupPanzoomWithSwipeToggle = setupPanzoomWithSwipeToggle;

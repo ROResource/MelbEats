@@ -99,19 +99,15 @@ header {
   border-top: 1px solid #eee;
   text-align: center;
 }
-
-
 /* Optional: style your content area */
 #content {
   padding: 20px;
   font-family: Arial, sans-serif;
 }
-
 .rating-icon {
   background: none;
   border: none;
 }
-
 .rating-circle {
   background-color: #2c3e50;        /* dark blue-grey */
   color: #fff;
@@ -125,7 +121,6 @@ header {
   box-shadow: 0 2px 5px rgba(0,0,0,0.3);
   transition: transform 0.2s ease;
 }
-
 .rating-circle:hover {
   transform: scale(1.2);
   cursor: pointer;
@@ -139,11 +134,9 @@ header {
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   line-height: 1.4;
 }
-
 details div {
   user-select: none;
 }
-
 details.fltr summary {
   display: flex;
   justify-content: center;
@@ -152,7 +145,6 @@ details.fltr summary {
   list-style: none;   /* optional: hides default ▸ arrow */
   cursor: pointer;
 }
-
 .filters details[open] > .filter-group {
   position: absolute;
   left: 0;
@@ -169,8 +161,6 @@ details.fltr summary {
   box-sizing: border-box;
   overflow-x: auto;             /* ✅ scroll if needed */
 }
-
-
 .filters details {
   flex: 1 1 20%;
   background: #fff;
@@ -180,7 +170,6 @@ details.fltr summary {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
 }
-
 .filters summary {
   font-weight: bold;
   cursor: pointer;
@@ -189,7 +178,6 @@ details.fltr summary {
   font-size: 1rem;
   line-height: 1.4;
 }
-
 .filter-group {
   display: grid;
   grid-template-columns: repeat(3, minmax(140px, 1fr));
@@ -206,14 +194,10 @@ details.fltr summary {
   min-width: 100%;
   z-index: 1000;
 }
-
-
 .filter-group::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-
-
 /* === REGION SUBGROUP CONTAINER === */
 .filter-subgroup {
   margin-bottom: 10px;
@@ -354,6 +338,7 @@ details.restaurants {
   background: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   width: 90%;
+  max-height: 90vh;
 }
 
 .details-content {
@@ -413,7 +398,7 @@ summary {
 }
 
 .glide__slide img {
-  max-height: 60vh;           /* Max height = 70% of the viewport */
+  max-height: 60vh;          /* Max height = 70% of the viewport */
   max-width: 100%;               /* Let width scale naturally */
   display: block;
   margin: auto;
@@ -560,7 +545,7 @@ summary {
   user-select: none;
 }
 #listbtn {
-  display: hidden;
+  display: none;
 }
 .close-btn:hover {
   color: #f00000;
