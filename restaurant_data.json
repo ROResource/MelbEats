@@ -845,7 +845,9 @@
     "map": "https://maps.app.goo.gl/gvFMdWq79vgeUpru5",
     "occasion": "Lunch",
     "price": 2.0,
-    "images": []
+    "images": [
+      "pics/Raya/20250215_120548.jpg"
+    ]
   },
   {
     "name": "Robata",
