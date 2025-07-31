@@ -896,7 +896,9 @@
     "map": "https://maps.app.goo.gl/E3Gk3gQcoFKNqNC89",
     "occasion": "Dinner",
     "price": 3.0,
-    "images": []
+    "images": [
+      "pics/Roccos Bologna Discoteca/IMG_5100.jpg"
+    ]
   },
   {
     "name": "Rue Du Tranh",
