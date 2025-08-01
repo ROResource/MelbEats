@@ -83,6 +83,18 @@
     "images": []
   },
   {
+    "name": "B Churrasco Brazilian BBQ",
+    "rating": 86,
+    "style": "Brazilian",
+    "region": "Central/South American",
+    "comment": "All you can eat Brazilian BBQ, unique serice. Loads of meat.",
+    "latitude": -37.8087105051124,
+    "longitude": 144.961776366272,
+    "map": "https://maps.app.goo.gl/Gz358H4hZYrCA7Qs6",
+    "occasion": "Dinner",
+    "price": 3.0
+  },
+  {
     "name": "Bar Lourinha",
     "rating": 74,
     "style": "Tapas Bar",
@@ -557,6 +569,18 @@
     ]
   },
   {
+    "name": "Lupino",
+    "rating": 84,
+    "style": "Italian",
+    "region": "European",
+    "comment": "Nice restaurant, probably a bit too fancy for just lunch.",
+    "latitude": -37.8126818273665,
+    "longitude": 144.972336939236,
+    "map": "https://maps.app.goo.gl/ZWvzhb9Uykr9EJdm6",
+    "occasion": "Dinner",
+    "price": 3.5
+  },
+  {
     "name": "Maha",
     "rating": 86,
     "style": "Middle-Eastern",
@@ -728,6 +752,18 @@
     ]
   },
   {
+    "name": "Nicos Sandwich Deli",
+    "rating": 85,
+    "style": "Contemporary",
+    "region": "Australian",
+    "comment": "Great, fresh sandwiches. Weekdays only",
+    "latitude": -37.8135402746917,
+    "longitude": 144.969915512983,
+    "map": "https://maps.app.goo.gl/hveF9EtL3F7DS3dG9",
+    "occasion": "Lunch",
+    "price": 2.0
+  },
+  {
     "name": "Nomad",
     "rating": 84,
     "style": "Middle-Eastern",
@@ -891,8 +927,8 @@
     "style": "Italian",
     "region": "European",
     "comment": "Unreal Meatball Sub",
-    "latitude": -37.80442154971417,
-    "longitude": 144.9748117842871,
+    "latitude": -37.8052741578227,
+    "longitude": 144.975027701038,
     "map": "https://maps.app.goo.gl/E3Gk3gQcoFKNqNC89",
     "occasion": "Dinner",
     "price": 3.0,
@@ -1026,6 +1062,30 @@
       "pics/The Abyssinian/IMG_7677.jpg",
       "pics/The Abyssinian/IMG_7678.jpg"
     ]
+  },
+  {
+    "name": "The Builders Arms",
+    "rating": 84,
+    "style": "Contemporary",
+    "region": "Australian",
+    "comment": "Busy bar, great food. Tuesday steak night",
+    "latitude": -37.8059369769489,
+    "longitude": 144.981692390101,
+    "map": "https://maps.app.goo.gl/qA6ALQLdFss7svub6",
+    "occasion": "Bar",
+    "price": 2.5
+  },
+  {
+    "name": "The Gertrude Hotel",
+    "rating": 81,
+    "style": "Contemporary",
+    "region": "Australian",
+    "comment": "Decent bar food, good place to meet friends.",
+    "latitude": -37.8061692038038,
+    "longitude": 144.979233700396,
+    "map": "https://maps.app.goo.gl/3ZwvP93QHRxzjBCj7",
+    "occasion": "Bar",
+    "price": 3.0
   },
   {
     "name": "The Meatball and Wine Bar",
