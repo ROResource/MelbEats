@@ -92,7 +92,8 @@
     "longitude": 144.961776366272,
     "map": "https://maps.app.goo.gl/Gz358H4hZYrCA7Qs6",
     "occasion": "Dinner",
-    "price": 3.0
+    "price": 3.0,
+    "images": []
   },
   {
     "name": "Bar Lourinha",
@@ -578,7 +579,8 @@
     "longitude": 144.972336939236,
     "map": "https://maps.app.goo.gl/ZWvzhb9Uykr9EJdm6",
     "occasion": "Dinner",
-    "price": 3.5
+    "price": 3.5,
+    "images": []
   },
   {
     "name": "Maha",
@@ -761,7 +763,10 @@
     "longitude": 144.969915512983,
     "map": "https://maps.app.goo.gl/hveF9EtL3F7DS3dG9",
     "occasion": "Lunch",
-    "price": 2.0
+    "price": 2.0,
+    "images": [
+      "pics/Nicos Sandwich Deli/20250801_124805.jpg"
+    ]
   },
   {
     "name": "Nomad",
@@ -1073,7 +1078,8 @@
     "longitude": 144.981692390101,
     "map": "https://maps.app.goo.gl/qA6ALQLdFss7svub6",
     "occasion": "Bar",
-    "price": 2.5
+    "price": 2.5,
+    "images": []
   },
   {
     "name": "The Gertrude Hotel",
@@ -1085,7 +1091,8 @@
     "longitude": 144.979233700396,
     "map": "https://maps.app.goo.gl/3ZwvP93QHRxzjBCj7",
     "occasion": "Bar",
-    "price": 3.0
+    "price": 3.0,
+    "images": []
   },
   {
     "name": "The Meatball and Wine Bar",
