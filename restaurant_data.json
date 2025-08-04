@@ -142,7 +142,9 @@
     "map": "https://maps.app.goo.gl/TL8r1t6cWu3DXyjFA",
     "occasion": "Quick Eats",
     "price": 2.0,
-    "images": []
+    "images": [
+      "pics/Butchers Diner/IMG_7531.jpg"
+    ]
   },
   {
     "name": "Café Kinetic",
@@ -476,7 +478,11 @@
     "map": "https://maps.app.goo.gl/nFrLzseyM4BaxWb36",
     "occasion": "Ramen",
     "price": 2.0,
-    "images": []
+    "images": [
+      "pics/Juicy Bao/IMG_6690.jpg",
+      "pics/Juicy Bao/IMG_6691.jpg",
+      "pics/Juicy Bao/IMG_7541.jpg"
+    ]
   },
   {
     "name": "Kisume",
