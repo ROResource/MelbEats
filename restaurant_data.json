@@ -87,7 +87,7 @@
     "rating": 86,
     "style": "Brazilian",
     "region": "Central/South American",
-    "comment": "All you can eat Brazilian BBQ, unique serice. Loads of meat.",
+    "comment": "All you can eat Brazilian BBQ, unique service. Loads of meat.",
     "latitude": -37.8087105051124,
     "longitude": 144.961776366272,
     "map": "https://maps.app.goo.gl/Gz358H4hZYrCA7Qs6",
@@ -98,7 +98,7 @@
   {
     "name": "Bar Lourinha",
     "rating": 74,
-    "style": "Tapas Bar",
+    "style": "Spanish",
     "region": "European",
     "comment": "Cosy Tapas bar, easy for walk in and bar seating",
     "latitude": -37.812815,
@@ -401,6 +401,31 @@
     "images": []
   },
   {
+    "name": "Gimlet",
+    "rating": 90,
+    "style": "Contemporary",
+    "region": "Australian",
+    "comment": "High end restaurant, CBD staple. Great for a fancy lunch or special occasion",
+    "latitude": -37.8157795325499,
+    "longitude": 144.969600982821,
+    "map": "https://maps.app.goo.gl/DPWsQiNgU7bb5eTD9",
+    "occasion": "Dinner",
+    "price": 5.0,
+    "images": [
+      "pics/Gimlet/20250903_131240.jpg",
+      "pics/Gimlet/20250903_132307.jpg",
+      "pics/Gimlet/20250903_132330.jpg",
+      "pics/Gimlet/20250903_133911.jpg",
+      "pics/Gimlet/20250903_142506.jpg",
+      "pics/Gimlet/IMG_8748.JPEG",
+      "pics/Gimlet/IMG_8749.JPEG",
+      "pics/Gimlet/IMG_8750.JPEG",
+      "pics/Gimlet/IMG_8751.JPEG",
+      "pics/Gimlet/IMG_8752.JPEG",
+      "pics/Gimlet/IMG_8753.JPEG"
+    ]
+  },
+  {
     "name": "Hakata Gensuke",
     "rating": 85,
     "style": "Japanese",
@@ -439,7 +464,9 @@
     "map": "https://maps.app.goo.gl/1xvKmea1kiJLKABm8",
     "occasion": "Lunch",
     "price": 2.5,
-    "images": []
+    "images": [
+      "pics/Hectors Deli/20250824_133307.jpg"
+    ]
   },
   {
     "name": "Hochi Mama",
@@ -453,6 +480,25 @@
     "occasion": "Dinner",
     "price": 3.0,
     "images": []
+  },
+  {
+    "name": "Hopper Joint",
+    "rating": 84,
+    "style": "Sri Lankan",
+    "region": "Asia",
+    "comment": "Random Sri Lankan joint, meaty, tasty and spicy.",
+    "latitude": -37.8486590123461,
+    "longitude": 144.993499747376,
+    "map": "https://maps.app.goo.gl/eLTd4PmXHkZT3bmb9",
+    "occasion": "Dinner",
+    "price": 3.0,
+    "images": [
+      "pics/Hopper Joint/20250904_203240.jpg",
+      "pics/Hopper Joint/20250904_203246.jpg",
+      "pics/Hopper Joint/IMG_8796.JPEG",
+      "pics/Hopper Joint/IMG_8797.JPEG",
+      "pics/Hopper Joint/IMG_8798.JPEG"
+    ]
   },
   {
     "name": "Humble Rays",
@@ -482,6 +528,26 @@
       "pics/Juicy Bao/IMG_6690.jpg",
       "pics/Juicy Bao/IMG_6691.jpg",
       "pics/Juicy Bao/IMG_7541.jpg"
+    ]
+  },
+  {
+    "name": "Kikanbo",
+    "rating": 89,
+    "style": "Japanese",
+    "region": "Asia",
+    "comment": "Viral ramen spot often with big queues at weekend. Quieter mid-week. Up there with the best ramen in town",
+    "latitude": -37.8096265538826,
+    "longitude": 144.961589310172,
+    "map": "https://maps.app.goo.gl/KPwpM9e245WPsuo76",
+    "occasion": "Ramen",
+    "price": 2.0,
+    "images": [
+      "pics/Kikanbo/20250901_134709.jpg",
+      "pics/Kikanbo/20250901_134712.jpg",
+      "pics/Kikanbo/20250905_161120.jpg",
+      "pics/Kikanbo/20250905_162443.jpg",
+      "pics/Kikanbo/20250905_162446.jpg",
+      "pics/Kikanbo/IMG_8800.JPEG"
     ]
   },
   {
@@ -572,7 +638,17 @@
       "pics/Lucy Liu/IMG_7685.jpg",
       "pics/Lucy Liu/IMG_7686.jpg",
       "pics/Lucy Liu/IMG_7687.jpg",
-      "pics/Lucy Liu/IMG_7690.jpg"
+      "pics/Lucy Liu/IMG_7690.jpg",
+      "pics/Lucy Liu/IMG_8699.JPEG",
+      "pics/Lucy Liu/IMG_8700.JPEG",
+      "pics/Lucy Liu/IMG_8701.JPEG",
+      "pics/Lucy Liu/IMG_8702.JPEG",
+      "pics/Lucy Liu/IMG_8703.JPEG",
+      "pics/Lucy Liu/IMG_8704.JPEG",
+      "pics/Lucy Liu/IMG_8705.JPEG",
+      "pics/Lucy Liu/IMG_8706.JPEG",
+      "pics/Lucy Liu/IMG_8707.JPEG",
+      "pics/Lucy Liu/IMG_8708.JPEG"
     ]
   },
   {
@@ -623,9 +699,15 @@
     "occasion": "Dinner",
     "price": 3.5,
     "images": [
+      "pics/Mamasita/20250810_155250.jpg",
+      "pics/Mamasita/20250810_155252.jpg",
+      "pics/Mamasita/20250810_161019.jpg",
       "pics/Mamasita/IMG_6637.jpg",
       "pics/Mamasita/IMG_6638.jpg",
-      "pics/Mamasita/IMG_6639.jpg"
+      "pics/Mamasita/IMG_6639.jpg",
+      "pics/Mamasita/IMG_8006.JPEG",
+      "pics/Mamasita/IMG_8008.JPEG",
+      "pics/Mamasita/IMG_8009.JPEG"
     ]
   },
   {
@@ -684,7 +766,10 @@
     "map": "https://maps.app.goo.gl/3X7G9zPVmJGrDKBZ6",
     "occasion": "Brunch",
     "price": 3.0,
-    "images": []
+    "images": [
+      "pics/Maverick/20250906_111519.jpg",
+      "pics/Maverick/IMG_8823.JPEG"
+    ]
   },
   {
     "name": "Mensho",
@@ -697,7 +782,13 @@
     "map": "https://maps.app.goo.gl/qkmttrsU6koRwq139",
     "occasion": "Ramen",
     "price": 1.5,
-    "images": []
+    "images": [
+      "pics/Mensho/20250830_134724.jpg",
+      "pics/Mensho/20250830_134726.jpg",
+      "pics/Mensho/IMG_8710.JPEG",
+      "pics/Mensho/IMG_8711.JPEG",
+      "pics/Mensho/IMG_8726.JPEG"
+    ]
   },
   {
     "name": "Minamishima",
@@ -775,6 +866,22 @@
     ]
   },
   {
+    "name": "No22 Café",
+    "rating": 86,
+    "style": "Italian",
+    "region": "European",
+    "comment": "Cosy Italian foccacia style sandwich shop",
+    "latitude": -37.8164265269175,
+    "longitude": 144.970375043743,
+    "map": "https://maps.app.goo.gl/shV8pM4wb9xiVhkw7",
+    "occasion": "Lunch",
+    "price": 2.0,
+    "images": [
+      "pics/No22 Café/20250816_115614.jpg",
+      "pics/No22 Café/IMG_8059.JPEG"
+    ]
+  },
+  {
     "name": "Nomad",
     "rating": 84,
     "style": "Middle-Eastern",
@@ -807,7 +914,27 @@
     "occasion": "Ramen",
     "price": 3.0,
     "images": [
-      "pics/OMI 380/IMG_7848.jpg"
+      "pics/OMI 380/IMG_7848.jpg",
+      "pics/OMI 380/IMG_8915.jpg"
+    ]
+  },
+  {
+    "name": "Paik's BBQ",
+    "rating": 82,
+    "style": "Korean",
+    "region": "Asia",
+    "comment": "Chaotic but delicious Korean BBQ place. Highly recommend going with someone who knows what they are doing!",
+    "latitude": -37.8130193354038,
+    "longitude": 144.956459818919,
+    "map": "https://maps.app.goo.gl/XYFR8QQzXAbMXEn48",
+    "occasion": "Ramen",
+    "price": 2.0,
+    "images": [
+      "pics/Paik's BBQ/20250815_193316.jpg",
+      "pics/Paik's BBQ/20250815_193318.jpg",
+      "pics/Paik's BBQ/IMG_8051.JPEG",
+      "pics/Paik's BBQ/IMG_8052.JPEG",
+      "pics/Paik's BBQ/IMG_8053.JPEG"
     ]
   },
   {
@@ -882,6 +1009,25 @@
     "images": []
   },
   {
+    "name": "Ramen Ippudo",
+    "rating": 88,
+    "style": "Japanese",
+    "region": "Asia",
+    "comment": "Another quality ramen spot, recommended by a local",
+    "latitude": -37.8104651634162,
+    "longitude": 144.96623814569,
+    "map": "https://maps.app.goo.gl/iwE5Lkzc5gfjmM2cA",
+    "occasion": "Ramen",
+    "price": 2.0,
+    "images": [
+      "pics/Ramen Ippudo/20250809_140236.jpg",
+      "pics/Ramen Ippudo/20250823_130211.jpg",
+      "pics/Ramen Ippudo/20250823_130642.jpg",
+      "pics/Ramen Ippudo/IMG_7998.JPEG",
+      "pics/Ramen Ippudo/IMG_8291.JPEG"
+    ]
+  },
+  {
     "name": "Raya",
     "rating": 85,
     "style": "Asian Fusion",
@@ -897,9 +1043,51 @@
     ]
   },
   {
+    "name": "Red Spice Road",
+    "rating": 87,
+    "style": "Asian Fusion",
+    "region": "Asia",
+    "comment": "Another amzaing Asian fusion place with great feed me menus",
+    "latitude": -37.8152002851226,
+    "longitude": 144.961363341465,
+    "map": "https://maps.app.goo.gl/ofXcGwRSxU7Jo1AE9",
+    "occasion": "Dinner",
+    "price": 4.0,
+    "images": [
+      "pics/Red Spice Road/20250816_181129.jpg",
+      "pics/Red Spice Road/20250816_182245.jpg",
+      "pics/Red Spice Road/20250816_183417.jpg",
+      "pics/Red Spice Road/IMG_8082.JPEG",
+      "pics/Red Spice Road/IMG_8084.JPEG"
+    ]
+  },
+  {
+    "name": "Reed House",
+    "rating": 84,
+    "style": "English",
+    "region": "European",
+    "comment": "English food that isn’t shite. Cool location, solid meal.",
+    "latitude": -37.8095000604173,
+    "longitude": 144.96812236477,
+    "map": "https://maps.app.goo.gl/wrHNNoXmHybBVwKV8",
+    "occasion": "Dinner",
+    "price": 3.0,
+    "images": [
+      "pics/Reed House/20250808_201844.jpg",
+      "pics/Reed House/IMG_7980.HEIC",
+      "pics/Reed House/IMG_7982.HEIC",
+      "pics/Reed House/IMG_7984.HEIC",
+      "pics/Reed House/IMG_7985.HEIC",
+      "pics/Reed House/IMG_7986.HEIC",
+      "pics/Reed House/IMG_7987.HEIC",
+      "pics/Reed House/IMG_7988.JPEG",
+      "pics/Reed House/IMG_7990.HEIC"
+    ]
+  },
+  {
     "name": "Robata",
     "rating": 85,
-    "style": "Japanese Grill",
+    "style": "Japanese",
     "region": "Asia",
     "comment": "Plenty of tasty  meat and sushi. Very cool décor",
     "latitude": -37.8158043,
@@ -908,12 +1096,27 @@
     "occasion": "Dinner",
     "price": 4.0,
     "images": [
+      "pics/Robata/20250825_193151.jpg",
+      "pics/Robata/20250825_194351.jpg",
+      "pics/Robata/20250825_195726.jpg",
+      "pics/Robata/20250825_201412.jpg",
+      "pics/Robata/20250825_201415.jpg",
+      "pics/Robata/20250825_201417.jpg",
+      "pics/Robata/20250825_201421.jpg",
+      "pics/Robata/20250825_201533.jpg",
+      "pics/Robata/20250825_203216.jpg",
       "pics/Robata/IMG_6819.jpg",
       "pics/Robata/IMG_6821.jpg",
       "pics/Robata/IMG_6823.jpg",
       "pics/Robata/IMG_6824.jpg",
       "pics/Robata/IMG_6825.jpg",
-      "pics/Robata/IMG_6826.jpg"
+      "pics/Robata/IMG_6826.jpg",
+      "pics/Robata/IMG_8302.JPEG",
+      "pics/Robata/IMG_8303.JPEG",
+      "pics/Robata/IMG_8305.JPEG",
+      "pics/Robata/IMG_8306.JPEG",
+      "pics/Robata/IMG_8307.JPEG",
+      "pics/Robata/IMG_8308.JPEG"
     ]
   },
   {
@@ -1258,6 +1461,18 @@
       "pics/Vinesmith/IMG_4682.jpg",
       "pics/Vinesmith/IMG_4685.jpg"
     ]
+  },
+  {
+    "name": "Vlado's Charcoal Grill",
+    "rating": 89,
+    "style": "Steakhouse",
+    "region": "European",
+    "comment": "Iconic steakhouse with unchanged minimal menu for 50 years. Great experience",
+    "latitude": -37.8176133671726,
+    "longitude": 144.992037532172,
+    "map": "https://maps.app.goo.gl/4kYMxa5gFYCMwthWA",
+    "occasion": "Dinner",
+    "price": 4.0
   },
   {
     "name": "Warkop",
