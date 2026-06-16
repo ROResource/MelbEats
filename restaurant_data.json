@@ -875,11 +875,7 @@
     "longitude": 144.970375043743,
     "map": "https://maps.app.goo.gl/shV8pM4wb9xiVhkw7",
     "occasion": "Lunch",
-    "price": 2.0,
-    "images": [
-      "pics/No22 Café/20250816_115614.jpg",
-      "pics/No22 Café/IMG_8059.JPEG"
-    ]
+    "price": 2.0
   },
   {
     "name": "Nomad",
@@ -919,7 +915,7 @@
     ]
   },
   {
-    "name": "Paik's BBQ",
+    "name": "Paiks BBQ",
     "rating": 82,
     "style": "Korean",
     "region": "Asia",
@@ -930,11 +926,11 @@
     "occasion": "Ramen",
     "price": 2.0,
     "images": [
-      "pics/Paik's BBQ/20250815_193316.jpg",
-      "pics/Paik's BBQ/20250815_193318.jpg",
-      "pics/Paik's BBQ/IMG_8051.JPEG",
-      "pics/Paik's BBQ/IMG_8052.JPEG",
-      "pics/Paik's BBQ/IMG_8053.JPEG"
+      "pics/Paiks BBQ/20250815_193316.jpg",
+      "pics/Paiks BBQ/20250815_193318.jpg",
+      "pics/Paiks BBQ/IMG_8051.JPEG",
+      "pics/Paiks BBQ/IMG_8052.JPEG",
+      "pics/Paiks BBQ/IMG_8053.JPEG"
     ]
   },
   {
@@ -1463,7 +1459,7 @@
     ]
   },
   {
-    "name": "Vlado's Charcoal Grill",
+    "name": "Vlados Charcoal Grill",
     "rating": 89,
     "style": "Steakhouse",
     "region": "European",
