@@ -7,58 +7,43 @@
   <meta name="description" content="Explore top-rated restaurants in Melbourne, filtered by cuisine, rating, and occasion. Updated regularly by locals." />
   <meta name="robots" content="index, follow" />
 
-  <!-- Canonical URL (prevents duplicate content issues) -->
+  <!-- Canonical URL -->
   <link rel="canonical" href="https://www.melbeats.com/" />
 
   <!-- Favicon -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon" />
 
-  <!-- Open Graph (for social media preview) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Top Restaurants in Melbourne | MelbEats" />
-  <meta property="og:description" content="Filter Melbourne’s best restaurants by style, rating, and map location." />
+  <meta property="og:description" content="Filter Melbourne's best restaurants by style, rating, and map location." />
   <meta property="og:url" content="https://www.melbeats.com/" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://www.melbeats.com/preview.jpg" />
 
-  <!-- Twitter Card (optional but helpful) -->
+  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Top Restaurants in Melbourne | MelbEats" />
-  <meta name="twitter:description" content="Filter Melbourne’s best restaurants by style, rating, and occasion." />
+  <meta name="twitter:description" content="Filter Melbourne's best restaurants by style, rating, and occasion." />
   <meta name="twitter:image" content="https://www.melbeats.com/preview.jpg" />
 
-  <!-- Structured Data (example for one restaurant, can generate dynamically later) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Restaurant",
-    "name": "San Telmo",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "14 Meyers Place",
-      "addressLocality": "Melbourne",
-      "addressRegion": "VIC",
-      "postalCode": "3000",
-      "addressCountry": "AU"
-    },
-    "servesCuisine": "Argentinian",
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "94",
-      "reviewCount": "203"
-    },
-    "url": "https://www.melbeats.com/#San_Telmo"
-  }
-  </script>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
 <body>
-    <header>
-        <div id="header">
-            <h1>MelbEats</h1>
-        </div>
-    </header>
-    <main>
-      <div class="filters">
+  <header>
+    <div id="header">
+      <h1>MelbEats</h1>
+    </div>
+  </header>
+
+  <main>
+    <div class="filters">
       <details class="fltr">
         <summary>Style</summary>
         <div id="style" class="filter-group"></div>
@@ -78,37 +63,35 @@
         <summary>Price</summary>
         <div id="price" class="filter-group"></div>
       </details>
-      </div>
-      <div id="map">
-        <div class="map-buttons">
-          <button id="reset-filters" class="map-button">Reset Filters</button>
-          <button id="marker-toggle" class="map-button">Show Icons</button>
-        </div>
-      </div>
+    </div>
 
-      <button id="see_full_list">See Full List</button>
-    </main>
-  <div id="restaurant-overlay" class="map-overlay hidden"> 
+    <div id="map">
+      <div class="map-buttons">
+        <button id="reset-filters" class="map-button">Reset Filters</button>
+        <button id="marker-toggle" class="map-button">Show Icons</button>
+      </div>
+    </div>
+
+    <button id="see_full_list">See Full List</button>
+  </main>
+
+  <!-- Error state shown if data fails to load -->
+  <div id="load-error" class="load-error hidden">
+    <p>&#9888; Could not load restaurant data. Please check your connection and refresh the page.</p>
   </div>
 
-  <button id= "listbtn" class="close-btn">×</button>
+  <button id="listbtn" class="close-btn">&#215;</button>
   <div id="list_container" class="list-overlay hidden">
-  <div id="list-box">
-    
-  <div id="restaurant-list"></div> </div>
+    <div id="list-box">
+      <div id="restaurant-list"></div>
+    </div>
   </div>
 
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/css/glide.core.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-
-  
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js"></script>
-  <script src="https://unpkg.com/@panzoom/panzoom/dist/panzoom.min.js"></script>
-
-  <script src="map.js"></script> 
-  <script src="main.js"></script>    
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide/dist/glide.min.js" defer></script>
+  <script src="https://unpkg.com/@panzoom/panzoom/dist/panzoom.min.js" defer></script>
+  <script src="map.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>

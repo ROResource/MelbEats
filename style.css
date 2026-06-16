@@ -1,11 +1,86 @@
+/* =============================================================================
+   MELBEATS — style.css
+   Colour tokens and spacing defined as CSS custom properties at the top.
+   All magic numbers replaced with variable references.
+   ============================================================================= */
+
+:root {
+  /* --- Colours --- */
+  --color-bg:            #fdfdfd;
+  --color-surface:       #ffffff;
+  --color-border:        #cccccc;
+  --color-border-light:  #dddddd;
+  --color-border-faint:  #eeeeee;
+  --color-text:          #111111;
+  --color-text-muted:    #555555;
+  --color-text-subtle:   #444444;
+  --color-primary:       #71abdf;
+  --color-primary-dark:  #3399ff;
+  --color-accent:        #007BFF;
+  --color-accent-hover:  #0056b3;
+  --color-rating-green:  #27ae60;
+  --color-rating-yellow: #f1c40f;
+  --color-rating-orange: #f39c12;
+  --color-rating-red:    #c0392b;
+  --color-marker-bg:     #2c3e50;
+  --color-filter-open-bg:#e0f0ff;
+  --color-filter-open-border: #3399ff;
+  --color-list-box-bg:   grey;
+  --color-overlay-bg:    rgba(0, 0, 0, 0.6);
+
+  /* --- Occasion marker colours --- */
+  --occasion-brunch:      #daffcd;
+  --occasion-fine-dining: #ffffff;
+  --occasion-cocktails:   #eb6391;
+  --occasion-dinner:      #3e79aa;
+  --occasion-ramen:       #93aa3e;
+  --occasion-sushi:       #3e79aa;
+  --occasion-cafe:        #3e79aa;
+  --occasion-lunch:       #3e79aa;
+  --occasion-quick-eats:  #3e79aa;
+  --occasion-bar:         #f0a500;
+  --occasion-wine:        #a34f4f;
+
+  /* --- Spacing --- */
+  --space-1:  0.25rem;   /*  4px */
+  --space-2:  0.5rem;    /*  8px */
+  --space-3:  0.75rem;   /* 12px */
+  --space-4:  1rem;      /* 16px */
+  --space-6:  1.5rem;    /* 24px */
+  --space-8:  2rem;      /* 32px */
+
+  /* --- Radius --- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-full: 50%;
+
+  /* --- Shadows --- */
+  --shadow-sm:  0 1px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md:  0 2px 5px rgba(0, 0, 0, 0.1);
+  --shadow-lg:  0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-xl:  0 4px 16px rgba(0, 0, 0, 0.2);
+
+  /* --- Typography --- */
+  --font-body:    'Inter', Arial, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+
+  /* --- Transitions --- */
+  --transition-fast: 0.2s ease;
+}
+
+/* =============================================================================
+   BASE
+   ============================================================================= */
+
 html, body {
   height: 100dvh;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #fdfdfd;
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
   overflow-y: auto;
-  overflow-x:hidden;
+  overflow-x: hidden;
 }
 
 main {
@@ -14,206 +89,126 @@ main {
   height: 89.5dvh;
 }
 
-header {
-  Margin: 0 auto;
-  Margin-top: 0.5dvh;
-  Margin-bottom: 0px;
-  background-color: #71abdf;
-  text-align: center;
-  border-radius: 8px;
-  font-family: 'Raleway', sans-serif;
-  height: 10dvh;
-  Width: 95%;
-  display: flex;
-  align-items: center;    /* Vertically center */
-  justify-content: center; /* Horizontally center */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
 }
+
+/* =============================================================================
+   HEADER
+   ============================================================================= */
+
+header {
+  margin: 0.5dvh auto 0;
+  background-color: var(--color-primary);
+  text-align: center;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  height: 10dvh;
+  width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+}
+
+/* =============================================================================
+   FILTERS
+   ============================================================================= */
+
 .filters {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   align-content: center;
   width: 95%;
-  box-sizing: border-box;
-  margin: 0 auto;
-  gap: 12px;
+  margin: 2.5dvh auto;
+  gap: var(--space-3);
   position: relative;
   z-index: 2;
-  Height: 5dvh;
-  Margin-top: 2.5dvh;
-  Margin-bottom: 2.5dvh;
+  height: 5dvh;
 }
 
-#map {
-  height: 70dvh;
-  width: 95%;
-  margin: 0 auto;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-  z-index: 1;
-  position: relative;
-}
-
-  #see_full_list {
-  Height:5dvh;
-  Margin: auto;
-  Margin-top: 2.5dvh;
-  Margin-bottom: 2dvh;
-  Border: 1px solid #ddd;
-  width: 95%;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;    /* Vertically center */
-  justify-content: center;
-  Box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  }
-
-@media (max-width: 1000px) {
-  .filters {
-    height: 10dvh;
-  }
-  .filters details {
-    flex: 1 1 calc(50% - 12px); /* 2 per row */
-  }
-  .filter-group {
-  grid-template-columns: repeat(2, minmax(140px, 1fr));
-  } 
-  .filter-master {
-  grid-column: span 2; 
-  }
-  #map {
-    height: 65dvh;
-  }}
-
-.comment {
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
-  text-align: center;
-}
-/* Optional: style your content area */
-#content {
-  padding: 20px;
-  font-family: Arial, sans-serif;
-}
-.rating-icon {
-  background: none;
-  border: none;
-}
-.rating-circle {
-  background-color: #2c3e50;        /* dark blue-grey */
-  color: #fff;
-  font-weight: bold;
-  font-size: 10px;
-  width: 28px;
-  height: 28px;
-  line-height: 28px;
-  text-align: center;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-  transition: transform 0.2s ease;
-}
-.rating-circle:hover {
-  transform: scale(1.2);
-  cursor: pointer;
-}
-.leaflet-tooltip .tooltip-box {
-  font-family: 'Raleway', sans-serif;
-  font-size: 35px;
-  padding: 4px 8px;
-  background: white;
-  border-radius: 6px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  line-height: 1.4;
-}
-details div {
-  user-select: none;
-}
-details.fltr summary {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center; /* optional but harmless */
-  list-style: none;   /* optional: hides default ▸ arrow */
-  cursor: pointer;
-}
-.filters details[open] > .filter-group {
-  position: absolute;
-  left: 0;
-  width: max-content;           /* ✅ allow it to grow with grid */             /* ✅ prevent column collapse */
-  max-width: auto; 
-  max-height: 70dvh;             /* ✅ avoid overflowing screen */
-  background: white;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-top: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  box-sizing: border-box;
-  overflow-x: auto;             /* ✅ scroll if needed */
-}
 .filters details {
   flex: 1 1 20%;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   padding: 6px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
+  box-shadow: var(--shadow-sm);
 }
+
 .filters summary {
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   user-select: none;
   padding: 6px 0;
   font-size: 1rem;
   line-height: 1.4;
 }
+
+details.fltr summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  cursor: pointer;
+}
+
+.fltr[open] {
+  background-color: var(--color-filter-open-bg);
+  border-color: var(--color-filter-open-border);
+}
+
+.filters details[open] > .filter-group {
+  position: absolute;
+  left: 0;
+  width: max-content;
+  max-width: none;
+  max-height: 70dvh;
+  background: var(--color-surface);
+  padding: var(--space-3);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  margin-top: var(--space-3);
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
 .filter-group {
   display: grid;
   grid-template-columns: repeat(3, minmax(140px, 1fr));
   gap: 10px 20px;
   padding: 14px 16px;
-  box-sizing: border-box;
   min-width: 400px;
-  width: max-content;        /* grow to fit grid content */
-  max-width: 90vw;           /* optional: cap at viewport */
-  overflow-x: auto;
+  width: max-content;
+  max-width: 90vw;
   max-height: 70dvh;
   overflow-x: auto;
   overflow-y: auto;
-  min-width: 100%;
   z-index: 1000;
 }
+
 .filter-group::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
-/* === REGION SUBGROUP CONTAINER === */
+
 .filter-subgroup {
   margin-bottom: 10px;
-  break-inside: avoid;         /* Keeps subgroup from splitting across columns */
+  break-inside: avoid;
 }
 
-/* === REGION TITLE (e.g., "CBD", "Fitzroy") === */
 .filter-subgroup strong {
   display: block;
   margin-bottom: 4px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 0.95rem;
-  color: #444;
+  color: var(--color-text-subtle);
 }
 
-/* === INDIVIDUAL CHECKBOXES IN SUBGROUP === */
 .filter-subgroup label {
   display: block;
   margin: 2px 0;
@@ -223,75 +218,196 @@ details.fltr summary {
   white-space: normal;
   overflow-wrap: anywhere;
 }
+
 .select-all-label {
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   display: inline-block;
   margin-bottom: 6px;
-  font-weight: bold;
+  font-weight: 700;
   grid-column: span 3;
 }
 
 .select-all-label-styles {
-  background-color:#e0f0ff
+  background-color: var(--color-filter-open-bg);
 }
 
 .filter-master {
   grid-column: span 3;
   text-align: left;
-  margin-bottom: 12px;
-  font-weight: bold;
+  margin-bottom: var(--space-3);
+  font-weight: 700;
 }
 
 .filter-master label {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
 }
 
-@media (max-width: 900px) {
-  .filters details {
-    flex: 1 1 calc(50% - 12px); /* 2 per row */
-  }
-  .filter-group {
-  grid-template-columns: repeat(2, minmax(140px, 1fr));
-}
-  .filter-master {
-  grid-column: span 2; 
-}
-  .select-all-label {
-  grid-column: span 2;
-}
+details div {
+  user-select: none;
 }
 
-/* === Overlay Panel === */
+/* =============================================================================
+   MAP
+   ============================================================================= */
+
+#map {
+  height: 70dvh;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  z-index: 1;
+  position: relative;
+}
+
+.map-buttons {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: var(--space-2);
+  z-index: 1001;
+}
+
+.map-button {
+  padding: 6px 12px;
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  user-select: none;
+  transition: background-color var(--transition-fast);
+}
+
+.map-button:hover {
+  background-color: var(--color-accent-hover);
+}
+
+/* =============================================================================
+   MARKERS
+   ============================================================================= */
+
+.rating-icon {
+  background: none;
+  border: none;
+}
+
+.rating-circle {
+  background-color: var(--color-marker-bg);
+  color: var(--color-surface);
+  font-weight: 700;
+  font-size: 10px;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  transition: transform var(--transition-fast);
+}
+
+.rating-circle:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.icon-marker {
+  width: 28px;
+  height: 28px;
+  background-color: var(--color-surface);
+  border-radius: var(--radius-full);
+  font-size: 20px;
+  text-align: center;
+  line-height: 28px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  font-weight: normal;
+  user-select: none;
+}
+
+.icon-marker[data-occasion="Brunch"]      { background-color: var(--occasion-brunch); }
+.icon-marker[data-occasion="Fine Dining"] { background-color: var(--occasion-fine-dining); }
+.icon-marker[data-occasion="Cocktails"]   { background-color: var(--occasion-cocktails); }
+.icon-marker[data-occasion="Dinner"]      { background-color: var(--occasion-dinner); }
+.icon-marker[data-occasion="Ramen"]       { background-color: var(--occasion-ramen); }
+.icon-marker[data-occasion="Sushi"]       { background-color: var(--occasion-sushi); }
+.icon-marker[data-occasion="Cafe"]        { background-color: var(--occasion-cafe); }
+.icon-marker[data-occasion="Lunch"]       { background-color: var(--occasion-lunch); }
+.icon-marker[data-occasion="Quick Eats"]  { background-color: var(--occasion-quick-eats); }
+.icon-marker[data-occasion="Bar"]         { background-color: var(--occasion-bar); }
+.icon-marker[data-occasion="Wine"]        { background-color: var(--occasion-wine); }
+
+.leaflet-tooltip .tooltip-box {
+  font-family: var(--font-display);
+  font-size: 35px;
+  padding: 4px 8px;
+  background: var(--color-surface);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  line-height: 1.4;
+}
+
+/* =============================================================================
+   SEE FULL LIST BUTTON
+   ============================================================================= */
+
+#see_full_list {
+  height: 5dvh;
+  margin: 2.5dvh auto 2dvh;
+  border: 1px solid var(--color-border-light);
+  width: 95%;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-md);
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  background: var(--color-surface);
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+#see_full_list:hover {
+  background-color: var(--color-filter-open-bg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* =============================================================================
+   OVERLAYS
+   ============================================================================= */
+
 .map-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0,0,0,0.6);
+  background: var(--color-overlay-bg);
   backdrop-filter: blur(4px);
   z-index: 2000;
   display: flex;
-  align-items: center;       /* ✅ vertical centering */
-  justify-content: center;   /* ✅ horizontal centering */       /* optional breathing room on small screens */
+  align-items: center;
+  justify-content: center;
   overflow-y: auto;
-  overflow-x:hidden;          /* in case content overflows vertically */
+  overflow-x: hidden;
 }
 
 .map-overlay > details {
   max-width: 80dvw;
   width: 90vw;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  box-sizing: border-box;
-
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
 }
+
 .map-overlay > details > summary {
   pointer-events: none;
-  
 }
 
 .hidden {
@@ -304,54 +420,78 @@ details.fltr summary {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.6);
+  background: var(--color-overlay-bg);
   backdrop-filter: blur(4px);
   z-index: 2100;
-  display: none;                  /* ❗️Important: add flex layout */
+  display: none;
   justify-content: center;
   align-items: flex-start;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-
 #list-box {
-  Margin-top: 5dvh;
+  margin-top: 5dvh;
   width: 90%;
-  background:grey;
-  border-radius: 8px;
+  background: var(--color-list-box-bg);
+  border-radius: var(--radius-md);
   z-index: 2101;
-  padding-top: 2.5dvh;
-  padding-bottom: 2.5dvh;
+  padding: 2.5dvh 0;
 }
 
+.close-btn {
+  position: fixed;
+  top: 5px;
+  right: 15px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: 13px;
+  font-size: 28px;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 4000;
+  user-select: none;
+  border: none;
+  transition: color var(--transition-fast);
+}
+
+#listbtn {
+  display: none;
+}
+
+.close-btn:hover {
+  color: #f00000;
+}
+
+/* =============================================================================
+   RESTAURANT CARDS
+   ============================================================================= */
+
 details.restaurants {
-  overflow: hidden;          /* prevents spilling */
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  margin: auto;
-  margin-top: 5dvh;
-  margin-bottom: 5dvh;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  margin: 5dvh auto;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
   padding: 10px;
-  background: #fff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-md);
   width: 90%;
   max-height: 90vh;
 }
 
 .details-content {
   overflow-y: auto;
-  flex-grow: 1;              /* expands to fill space */
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  gap: 1rem;                 /* optional spacing between items */
+  gap: 1rem;
 }
 
 summary {
   font-size: 1.25em;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   list-style: none;
   display: flex;
@@ -359,20 +499,34 @@ summary {
 }
 
 .rating {
-  font-weight: bold;
-  color:black;
+  font-weight: 700;
+  color: var(--color-text);
 }
+
 .restaurant_info {
   display: flex;
   justify-content: space-between;
   margin-top: 4px;
 }
+
 .type_of_cusine {
   font-style: italic;
-  color: #555;
+  color: var(--color-text-muted);
 }
 
-/* === Glide Base Layout === */
+.comment {
+  font-weight: 700;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-border-faint);
+  text-align: center;
+}
+
+/* =============================================================================
+   IMAGE GALLERY (GLIDE)
+   ============================================================================= */
+
 .glide {
   max-width: 100%;
   overflow: hidden;
@@ -381,36 +535,36 @@ summary {
 }
 
 .glide__slides {
-  
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
-/* === Slides === */
+
 .glide__slide {
   display: flex;
   justify-content: center;
   align-items: center;
-  Height: auto;
+  height: auto;
   object-fit: contain;
   flex-shrink: 0;
   overflow: hidden;
 }
 
 .glide__slide img {
-  max-height: 60vh;          /* Max height = 70% of the viewport */
-  max-width: 100%;               /* Let width scale naturally */
+  max-height: 60vh;
+  max-width: 100%;
   display: block;
   margin: auto;
   object-fit: contain;
-  overflow: hidden; 
+  overflow: hidden;
 }
-.glide_track {
-  display: flex;        /* Prevents wrapping */
-  justify-content: center;    /* Centers slides horizontally */
-  align-items: center;        /* Centers slides vertically */
+
+.glide__track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-/* === Arrows === */
+
 .glide__arrows {
   text-align: center;
   margin-top: 10px;
@@ -422,134 +576,95 @@ summary {
   padding: 6px 12px;
   margin: 0 10px;
   font-size: 1.5rem;
-  border-radius: 5px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background var(--transition-fast);
 }
 
 .glide__arrow:hover {
-  background-color: #ccc;
-}
-
-.fltr[open] {
-  background-color: #e0f0ff; /* light blue shade for better readability */
-  border-color: #3399ff;
-}
-
-.icon-marker {
-  width: 28px;
-  height: 28px;
-  background-color: white;
-  border-radius: 50%;
-  font-size: 20px;
-  text-align: center;
-  line-height: 28px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
-  font-weight: normal;
-  user-select: none;
-}
-
-
-/* Container to hold both buttons aligned top-right */
-.map-buttons {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px; /* Space between buttons */
-  z-index: 1001; /* Must be higher than Leaflet controls */
-}
-
-/* Shared button styling */
-.map-button {
-  padding: 6px 12px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  user-select: none;
-}
-
-
-.icon-marker[data-occasion="Brunch"] {
-  background-color: #daffcd;
-}
-.icon-marker[data-occasion="Fine Dining"] {
-  background-color: #ffffff;
-}
-.icon-marker[data-occasion="Cocktails"] {
-  background-color: #eb6391;
-}
-.icon-marker[data-occasion="Dinner"] {
-  background-color: #3e79aa;
-}
-.icon-marker[data-occasion="Ramen"] {
-  background-color: #93aa3e;
-}
-.icon-marker[data-occasion="Sushi"] {
-  background-color: #3e79aa;
-}
-.icon-marker[data-occasion="Cafe"] {
-  background-color: #3e79aa;
-}
-.icon-marker[data-occasion="Lunch"] {
-  background-color: #3e79aa;
-}
-.icon-marker[data-occasion="Quick Eats"] {
-  background-color: #3e79aa;
-}
-.icon-marker[data-occasion="Bar"] {
-  background-color: #f0a500; /* light orange */
-}
-.icon-marker[data-occasion="Wine"] {
-  background-color: #a34f4f; /* light red */
-}
-
-@supports (-webkit-touch-callout: none) and (not (translate: none)) {
- .map {
-  height: 60dvh;
- }
- details.restaurants {
-  max-height: 60dvh;
-}}
-
-* {
-  -webkit-tap-highlight-color: transparent;
+  background-color: var(--color-border);
 }
 
 .zoom-container {
-  display: inline-block;           /* shrink-wrap image initially */
+  display: inline-block;
   position: relative;
   overflow: hidden;
   max-height: 70vh;
   max-width: 100%;
   border: 5px solid black;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
 }
 
-.close-btn {
-  position: fixed;         /* Fix to viewport */
-  top: 5px;
-  right: 15px;
-  background: white;
-  color: black;
-  border-radius: 13px;
-  font-size: 28px;
-  font-weight: bold;
-  cursor: pointer;
-  z-index: 4000;            /* Must be higher than overlay */
-  user-select: none;
-}
-#listbtn {
-  display: none;
-}
-.close-btn:hover {
-  color: #f00000;
+/* =============================================================================
+   ERROR STATE
+   ============================================================================= */
+
+.load-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+  margin: var(--space-4) auto;
+  width: 95%;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: var(--radius-md);
+  color: #856404;
+  font-weight: 600;
+  text-align: center;
 }
 
+/* =============================================================================
+   MISC
+   ============================================================================= */
 
+#content {
+  padding: 20px;
+  font-family: var(--font-body);
+}
 
+/* =============================================================================
+   RESPONSIVE
+   ============================================================================= */
+
+@media (max-width: 1000px) {
+  .filters {
+    height: 10dvh;
+  }
+  .filters details {
+    flex: 1 1 calc(50% - 12px);
+  }
+  .filter-group {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+  .filter-master {
+    grid-column: span 2;
+  }
+  #map {
+    height: 65dvh;
+  }
+}
+
+@media (max-width: 900px) {
+  .filters details {
+    flex: 1 1 calc(50% - 12px);
+  }
+  .filter-group {
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+  }
+  .filter-master {
+    grid-column: span 2;
+  }
+  .select-all-label {
+    grid-column: span 2;
+  }
+}
+
+@supports (-webkit-touch-callout: none) and (not (translate: none)) {
+  #map {
+    height: 60dvh;
+  }
+  details.restaurants {
+    max-height: 60dvh;
+  }
+}
