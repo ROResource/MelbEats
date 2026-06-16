@@ -495,7 +495,6 @@
     "images": [
       "pics/Hopper Joint/20250904_203240.jpg",
       "pics/Hopper Joint/20250904_203246.jpg",
-      "pics/Hopper Joint/IMG_8796.JPEG",
       "pics/Hopper Joint/IMG_8797.JPEG",
       "pics/Hopper Joint/IMG_8798.JPEG"
     ]
@@ -1099,7 +1098,6 @@
       "pics/Robata/20250825_201415.jpg",
       "pics/Robata/20250825_201417.jpg",
       "pics/Robata/20250825_201421.jpg",
-      "pics/Robata/20250825_201533.jpg",
       "pics/Robata/20250825_203216.jpg",
       "pics/Robata/IMG_6819.jpg",
       "pics/Robata/IMG_6821.jpg",
@@ -1111,7 +1109,6 @@
       "pics/Robata/IMG_8303.JPEG",
       "pics/Robata/IMG_8305.JPEG",
       "pics/Robata/IMG_8306.JPEG",
-      "pics/Robata/IMG_8307.JPEG",
       "pics/Robata/IMG_8308.JPEG"
     ]
   },
@@ -1468,7 +1465,10 @@
     "longitude": 144.992037532172,
     "map": "https://maps.app.goo.gl/4kYMxa5gFYCMwthWA",
     "occasion": "Dinner",
-    "price": 4.0
+    "price": 4.0,
+    "images": [
+      "pics/Vlados Charcoal Grill/IMG_8720.jpg"
+    ]
   },
   {
     "name": "Warkop",
