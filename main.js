@@ -1,133 +1,125 @@
 document.addEventListener('DOMContentLoaded', () => {
   window.initMap();
 
-  fetch("restaurant_data.json")
+  fetch('restaurant_data.json')
     .then(res => res.json())
     .then(data => {
-      window.restaurantData = data; // ✅ Needed for toggling
+      window.restaurantData = data;
 
       renderRestaurants(data);
       populateFilters(data);
-      window.createMarkers(data);       // ✅ This already calls updateMarkers()
+      window.createMarkers(data);
       listoverlay();
 
-      window.setupResetFiltersButton(); // ✅ Must come after filters are populated
-      window.setupMarkerToggleButton(); // ✅ Needs DOM and data
+      window.setupResetFiltersButton();
+      window.setupMarkerToggleButton();
     })
     .catch(err => {
-      console.error("Failed to load restaurant data:", err);
+      console.error('Failed to load restaurant data:', err);
+      const errorEl = document.getElementById('load-error');
+      if (errorEl) errorEl.classList.remove('hidden');
     });
 });
 
 // === RENDER RESTAURANTS ===
 function renderRestaurants(data) {
-  const container = document.getElementById("restaurant-list");
+  const container = document.getElementById('restaurant-list');
 
   data.forEach(restaurant => {
     const { name, rating, style, comment, map, images = [] } = restaurant;
 
-    const safeName = name.replace(/\s+/g, "_");
+    const safeName = name.replace(/\s+/g, '_');
     const glideId = `gallery-${safeName}`;
     const mapLink = map
-      ? `<a href="${map}" target="_blank" class="map-link">View on Google Maps</a>`
-      : "";
+      ? `<a href="${map}" target="_blank" rel="noopener noreferrer" class="map-link">View on Google Maps</a>`
+      : '';
 
     let html = `
   <details class="restaurants" id="${name}">
     <summary>
       <div class="restaurant_name">${name}</div>
-      <div class="rating">${rating ?? ""}</div>
+      <div class="rating">${rating ?? ''}</div>
     </summary>
     <div class="details-content">
-    <div class="restaurant_info">
-      <div class="type_of_cusine">${style}</div>
-      <div class="link">${mapLink}</div>
-    </div>
-    <div class="comment">"${comment}"</div>
-  `;
+      <div class="restaurant_info">
+        <div class="type_of_cusine">${style}</div>
+        <div class="link">${mapLink}</div>
+      </div>
+      <div class="comment">"${comment}"</div>
+    `;
 
-      if (images.length > 0) {
-        html += `
+    if (images.length > 0) {
+      html += `
     <div class="glide" id="${glideId}">
       <div class="glide__track" data-glide-el="track">
         <ul class="glide__slides">
-  `;
+      `;
 
       images.forEach(imgPath => {
-        html += `<li class="glide__slide"><div class="zoom-container"><img src="${imgPath}" alt="${name} photo"></div></li>\n`;
+        html += `<li class="glide__slide"><div class="zoom-container"><img src="${imgPath}" alt="Photo of ${name}" loading="lazy" decoding="async"></div></li>\n`;
       });
 
       html += `
-      </ul>
+        </ul>
+      </div>
+      <div class="glide__arrows" data-glide-el="controls">
+        <button class="glide__arrow glide__arrow--left" data-glide-dir="<">&#8249;</button>
+        <button class="glide__arrow glide__arrow--right" data-glide-dir=">">&#8250;</button>
+      </div>
     </div>
-    <div class="glide__arrows" data-glide-el="controls">
-      <button class="glide__arrow glide__arrow--left" data-glide-dir="<">‹</button>
-      <button class="glide__arrow glide__arrow--right" data-glide-dir=">">›</button>
-    </div>
-  </div>
-  `;
-      }
+      `;
+    }
 
-      html += `</div></details>\n\n`;
-      container.insertAdjacentHTML("beforeend", html);
+    html += `</div></details>\n`;
+    container.insertAdjacentHTML('beforeend', html);
+  });
+
+  // Mount Glide instances
+  document.querySelectorAll('.glide').forEach(el => {
+    const instance = new Glide(`#${el.id}`, {
+      type: 'carousel',
+      perView: 1,
+      focusAt: 'center',
+      gap: 1,
     });
-
-  document.querySelectorAll('.glide').forEach((el) => {
-  const instance = new Glide(`#${el.id}`, {
-    type: 'carousel',
-    perView: 1,
-    focusAt: 'center',
-    gap: 1,
+    instance.mount();
+    el._glideInstance = instance;
+    setupPanzoomWithSwipeToggle(el);
   });
 
-  instance.mount();
-  el._glideInstance = instance;
-  setupPanzoomWithSwipeToggle(el); 
-  });
+  // Accordion + panzoom visibility — single unified listener
+  document.querySelectorAll('details.restaurants').forEach(panel => {
+    panel.addEventListener('toggle', () => {
+      if (!panel.open) return;
 
-  document.querySelectorAll("details.restaurants").forEach((panel) => {
-    panel.addEventListener("toggle", () => {
-      if (panel.open) {
-        document.querySelectorAll("details.restaurants").forEach((other) => {
-          if (other !== panel && other.open) {
-            other.removeAttribute("open");
-          }
-        });
-        panel.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    });
-  });
-    // When a panel is opened (clicked in the full list), mark its glide as visible and init panzoom
-  document.querySelectorAll("details.restaurants").forEach(panel => {
-    panel.addEventListener("toggle", () => {
-      if (panel.open) {
-        const glideEl = panel.querySelector('.glide');
+      // Close other open panels
+      document.querySelectorAll('details.restaurants').forEach(other => {
+        if (other !== panel && other.open) other.removeAttribute('open');
+      });
 
-        if (glideEl) {
-          // Remove visibility tag from others
-          document.querySelectorAll('.glide').forEach(g => g.classList.remove('glide--visible'));
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-          // Mark this one as visible
-          glideEl.classList.add('glide--visible');
-
-          // Setup panzoom for this one only (safe with internal init guard)
-          setupPanzoomWithSwipeToggle(glideEl);
-        }
+      // Update glide visibility and init panzoom
+      const glideEl = panel.querySelector('.glide');
+      if (glideEl) {
+        document.querySelectorAll('.glide').forEach(g => g.classList.remove('glide--visible'));
+        glideEl.classList.add('glide--visible');
+        setupPanzoomWithSwipeToggle(glideEl);
       }
     });
   });
-
 }
+
 // === POPULATE FILTERS ===
 function populateFilters(data) {
   const styleSet = new Set();
   const occasionSet = new Set();
   const priceSet = new Set();
   const ratingRanges = {
-    "60–69": [],
-    "70–79": [],
-    "80–89": [],
-    "90–100": []
+    '60\u201369': [],
+    '70\u201379': [],
+    '80\u201389': [],
+    '90\u2013100': []
   };
 
   data.forEach(r => {
@@ -137,345 +129,184 @@ function populateFilters(data) {
 
     const rating = Number(r.rating);
     if (!isNaN(rating)) {
-      if (rating >= 60 && rating < 70) ratingRanges["60–69"].push(r);
-      else if (rating >= 70 && rating < 80) ratingRanges["70–79"].push(r);
-      else if (rating >= 80 && rating < 90) ratingRanges["80–89"].push(r);
-      else if (rating >= 90) ratingRanges["90–100"].push(r);
+      if (rating >= 60 && rating < 70) ratingRanges['60\u201369'].push(r);
+      else if (rating >= 70 && rating < 80) ratingRanges['70\u201379'].push(r);
+      else if (rating >= 80 && rating < 90) ratingRanges['80\u201389'].push(r);
+      else if (rating >= 90) ratingRanges['90\u2013100'].push(r);
     }
   });
 
-  createGroupedCheckboxes("style", data);
-  createCheckboxes("occasion", [...occasionSet].sort());
-  createCheckboxes("price", [...priceSet].sort((a, b) => a - b));
-  createCheckboxes("rating", Object.keys(ratingRanges));
+  createGroupedCheckboxes('style', data);
+  createCheckboxes('occasion', [...occasionSet].sort());
+  createCheckboxes('price', [...priceSet].sort((a, b) => a - b));
+  createCheckboxes('rating', Object.keys(ratingRanges));
 
-  // ✅ Only one filter panel open at a time
-  document.querySelectorAll("details.fltr").forEach((panel) => {
-    panel.addEventListener("toggle", () => {
-      if (panel.open) {
-        document.querySelectorAll("details.fltr").forEach((other) => {
-          if (other !== panel && other.open) {
-            other.removeAttribute("open");
-          }
-        });
-        panel.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
+  // Only one filter panel open at a time
+  document.querySelectorAll('details.fltr').forEach(panel => {
+    panel.addEventListener('toggle', () => {
+      if (!panel.open) return;
+      document.querySelectorAll('details.fltr').forEach(other => {
+        if (other !== panel && other.open) other.removeAttribute('open');
+      });
+      panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
   });
 }
 
 function createCheckboxes(containerId, values) {
   const container = document.getElementById(containerId);
-  container.innerHTML = "";
+  container.innerHTML = '';
 
-  // === Create 'Select All' checkbox ===
-  const selectAllLabel = document.createElement("label");
-  const selectAllCheckbox = document.createElement("input");
-  selectAllCheckbox.type = "checkbox";
+  const selectAllLabel = document.createElement('label');
+  const selectAllCheckbox = document.createElement('input');
+  selectAllCheckbox.type = 'checkbox';
   selectAllCheckbox.name = `${containerId}-select-all`;
-  selectAllCheckbox.classList.add("select-all");
+  selectAllCheckbox.classList.add('select-all');
   selectAllCheckbox.checked = false;
-  selectAllLabel.classList.add("select-all-label");
-
-
+  selectAllLabel.classList.add('select-all-label');
   selectAllLabel.appendChild(selectAllCheckbox);
-  selectAllLabel.append(" Select All");
+  selectAllLabel.append(' Select All');
   container.appendChild(selectAllLabel);
 
-  // === Select All logic
-  selectAllCheckbox.addEventListener("change", () => {
-    const checkboxes = container.querySelectorAll(`input[type="checkbox"]:not(.select-all)`);
-    checkboxes.forEach(cb => {
-      cb.checked = selectAllCheckbox.checked;
-    });
-    if (window.updateMarkers) window.updateMarkers();
+  selectAllCheckbox.addEventListener('change', () => {
+    const checkboxes = container.querySelectorAll('input[type="checkbox"]:not(.select-all)');
+    checkboxes.forEach(cb => { cb.checked = selectAllCheckbox.checked; });
+    window.updateMarkers();
   });
 
-  // === Create individual checkboxes
   values.forEach(value => {
-    const label = document.createElement("label");
-    const checkbox = document.createElement("input");
-
-    checkbox.type = "checkbox";
+    const label = document.createElement('label');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
     checkbox.name = containerId;
     checkbox.value = value;
-    checkbox.checked = false;
-
+    checkbox.addEventListener('change', () => {
+      const all = container.querySelectorAll('input[type="checkbox"]:not(.select-all)');
+      const checked = container.querySelectorAll('input[type="checkbox"]:not(.select-all):checked');
+      selectAllCheckbox.checked = all.length === checked.length;
+      window.updateMarkers();
+    });
     label.appendChild(checkbox);
     label.append(` ${value}`);
     container.appendChild(label);
-  });
-
-  // ✅ Add change listeners to individual checkboxes
-  container.querySelectorAll(`input[type="checkbox"]:not(.select-all)`).forEach(cb => {
-    cb.addEventListener("change", () => {
-      if (window.updateMarkers) window.updateMarkers();
-    });
   });
 }
 
 function createGroupedCheckboxes(containerId, data) {
   const container = document.getElementById(containerId);
-  container.innerHTML = "";
+  container.innerHTML = '';
 
-  // Create filter-group wrapper if needed
-  const grid = document.createElement("div");
-  grid.classList.add("filter-group");
-  container.appendChild(grid);
-
-  // Master Select All
-  const masterWrapper = document.createElement("div");
-  masterWrapper.classList.add("filter-master");
-
-  const masterLabel = document.createElement("label");
-  const masterCheckbox = document.createElement("input");
-  masterCheckbox.type = "checkbox";
-  masterCheckbox.classList.add("select-all-master");
-  masterCheckbox.checked = false;
-
-  masterLabel.appendChild(masterCheckbox);
-  masterLabel.append(" Select All Styles");
-
-  masterWrapper.appendChild(masterLabel);
-  grid.appendChild(masterWrapper); // ✅ append to grid!
-
-
-  // Group styles by region
+  // Group restaurants by region
   const regionMap = {};
-  const allCheckboxes = [];
-  const regionSelectAlls = [];
-
   data.forEach(r => {
-    if (!regionMap[r.region]) regionMap[r.region] = new Set();
-    if (r.style) regionMap[r.region].add(r.style);
+    const region = r.region || 'Other';
+    const style = r.style;
+    if (!style) return;
+    if (!regionMap[region]) regionMap[region] = new Set();
+    regionMap[region].add(style);
   });
 
-  // For each region, create a subgroup
-  for (const region of Object.keys(regionMap).sort()) {
-    const regionContainer = document.createElement("div");
-    regionContainer.classList.add("filter-subgroup");
+  const allStyles = [...new Set(data.map(r => r.style).filter(Boolean))].sort();
 
-    const regionTitle = document.createElement("strong");
-    regionTitle.textContent = region;
-    regionContainer.appendChild(regionTitle);
+  // Master select-all
+  const masterLabel = document.createElement('div');
+  masterLabel.classList.add('filter-master');
+  const masterCheckbox = document.createElement('input');
+  masterCheckbox.type = 'checkbox';
+  masterCheckbox.classList.add('select-all');
+  masterCheckbox.name = 'style-select-all-master';
+  const masterLabelText = document.createElement('label');
+  masterLabelText.appendChild(masterCheckbox);
+  masterLabelText.append(' Select All');
+  masterLabel.appendChild(masterLabelText);
+  container.appendChild(masterLabel);
 
-    // Create Select All for this region
-    const selectAllLabel = document.createElement("label");
-    const selectAllCheckbox = document.createElement("input");
-    selectAllCheckbox.type = "checkbox";
-    selectAllCheckbox.classList.add("select-all-region");
-    selectAllCheckbox.checked = false;
-    selectAllLabel.appendChild(selectAllCheckbox);
-    selectAllLabel.append(" Select All");
-    selectAllLabel.classList.add("select-all-label-styles");
-    regionContainer.appendChild(selectAllLabel);
-    
-    regionSelectAlls.push(selectAllCheckbox); // ✅ track region-level boxes
+  masterCheckbox.addEventListener('change', () => {
+    container.querySelectorAll('input[type="checkbox"]:not(.select-all)').forEach(cb => {
+      cb.checked = masterCheckbox.checked;
+    });
+    window.updateMarkers();
+  });
 
+  // Per-region subgroups
+  const sortedRegions = Object.keys(regionMap).sort();
+  sortedRegions.forEach(region => {
+    const subgroup = document.createElement('div');
+    subgroup.classList.add('filter-subgroup');
 
-    // Add styles under this region
-    const styles = [...regionMap[region]].sort();
-    styles.forEach(style => {
-      const label = document.createElement("label");
-      const checkbox = document.createElement("input");
+    const title = document.createElement('strong');
+    title.textContent = region;
+    subgroup.appendChild(title);
 
-      checkbox.type = "checkbox";
-      checkbox.name = containerId;
+    [...regionMap[region]].sort().forEach(style => {
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.name = 'style';
       checkbox.value = style;
-      checkbox.checked = false;
-      allCheckboxes.push(checkbox);
-
+      checkbox.addEventListener('change', () => window.updateMarkers());
       label.appendChild(checkbox);
       label.append(` ${style}`);
-      regionContainer.appendChild(label);
+      subgroup.appendChild(label);
     });
 
-    // Handle select-all toggle for the region
-    selectAllCheckbox.addEventListener("change", () => {
-      const checkboxes = regionContainer.querySelectorAll(`input[type="checkbox"][name="${containerId}"]`);
-      checkboxes.forEach(cb => cb.checked = selectAllCheckbox.checked);
-      if (window.updateMarkers) window.updateMarkers();
-    });
-
-    // Add change listener for individual boxes
-    regionContainer.querySelectorAll(`input[type="checkbox"][name="${containerId}"]`).forEach(cb => {
-      cb.addEventListener("change", () => {
-        if (window.updateMarkers) window.updateMarkers();
-      });
-    });
-
-    grid.appendChild(regionContainer); // for each region
-
-  }
-
-masterCheckbox.addEventListener("change", () => {
-  const checked = masterCheckbox.checked;
-  allCheckboxes.forEach(cb => cb.checked = checked);
-  regionSelectAlls.forEach(cb => cb.checked = checked); // ✅ sync subgroup selects
-  if (window.updateMarkers) window.updateMarkers();
-});
+    container.appendChild(subgroup);
+  });
 }
 
 function listoverlay() {
-  const overlay = document.getElementById("list_container");
-  const trigger = document.getElementById("see_full_list");
-  const closeBtn = document.getElementById("listbtn");
+  const btn = document.getElementById('see_full_list');
+  const overlay = document.getElementById('list_container');
+  const closeBtn = document.getElementById('listbtn');
 
-  if (!overlay || !trigger || !closeBtn) return;
+  if (!btn || !overlay || !closeBtn) return;
 
-  trigger.addEventListener("click", () => {
-    overlay.classList.remove("hidden");
-    overlay.style.display = "flex";
-
-    closeBtn.style.display = "flex";
-    document.body.style.overflow = "hidden";
-    document.documentElement.style.overflow = "hidden";
-
-    setTimeout(() => {
-      document.querySelectorAll('.glide').forEach((el) => {
-        if (el._glideInstance) el._glideInstance.update();
-      });
-    }, 100);
+  btn.addEventListener('click', () => {
+    overlay.style.display = 'flex';
+    closeBtn.style.display = 'block';
   });
 
-  const closeOverlay = () => {
-    overlay.classList.add("hidden");
-    overlay.style.display = "none";
+  closeBtn.addEventListener('click', () => {
+    overlay.style.display = 'none';
+    closeBtn.style.display = 'none';
+  });
 
-    closeBtn.style.display = "none"  // ✅ hide the button again
-    document.body.style.overflow = "auto";
-    document.documentElement.style.overflow = "auto";
-  };
-
-  closeBtn.addEventListener("click", closeOverlay);
-
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeOverlay();
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      overlay.style.display = 'none';
+      closeBtn.style.display = 'none';
+    }
   });
 }
 
-document.querySelectorAll(".filters details").forEach(details => {
-  details.addEventListener("toggle", () => {
-  const ref = document.querySelector("map");
-  const tgt = document.querySelector(".filters details[open] > .filter-group");
+function setupPanzoomWithSwipeToggle(glideEl) {
+  if (glideEl._panzoomInitialised) return;
+  glideEl._panzoomInitialised = true;
 
-  if (ref && tgt) {
-    const refTop = ref.getBoundingClientRect().top;
-    tgt.style.top = `${refTop}px`;
-
-    const refHeight = ref.getBoundingClientRect().height;
-    tgt.style.maxHeight = `${refHeight}px`;
-  }});
-});
-
-function setupPanzoomWithSwipeToggle(el) {  
-  const glideInstance = el._glideInstance;
-  const swipe = glideInstance?._c?.Swipe;
-  if (!swipe) return;
-
-
-  // Optional: mark this as the "visible" glide
-  document.querySelectorAll('.glide').forEach(g => g.classList.remove('glide--visible'));
-  el.classList.add('glide--visible');
-
-  el.querySelectorAll('.zoom-container').forEach(container => {
+  const slides = glideEl.querySelectorAll('.zoom-container');
+  slides.forEach(container => {
     const img = container.querySelector('img');
-    let activePointers = new Set();
-    let disableZoom = false;
+    if (!img) return;
 
-    function initPanzoom() {
-      const panzoom = Panzoom(img, {
-        maxScale: 5,
-        minScale: 1,
-        contain: 'outside'
-      });
-
-      container.panzoomInstance = panzoom;
-      container.dataset.initialScale = panzoom.getScale();
-      container.dataset.swipeLocked = "false";
-
-      img.addEventListener('load', () => {
-        container.dataset.initialScale = panzoom.getScale();
-      });
-
-      // Disable wheel zoom on single-finger
-      container.addEventListener('wheel', (e) => {
-        if (disableZoom) {
-          e.preventDefault();
-          return;
-        }
-        panzoom.zoomWithWheel(e);
-      }, { passive: false });
-
-      // Finger tracking
-      img.addEventListener('pointerdown', (e) => {
-        activePointers.add(e.pointerId);
-        if (activePointers.size === 1) disableZoom = true;
-      });
-
-      img.addEventListener('pointerup', (e) => {
-        activePointers.delete(e.pointerId);
-        if (activePointers.size === 0) disableZoom = false;
-      });
-
-      img.addEventListener('pointercancel', (e) => {
-        activePointers.delete(e.pointerId);
-        disableZoom = false;
-      });
-
-      // Block swipe from Glide when zoomed in
-      img.addEventListener('touchstart', (e) => {
-        const swipeLocked = container.dataset.swipeLocked === "true";
-        if (swipeLocked) {
-          e.stopPropagation();
-        }
-      }, { passive: false });
-
-      // Main logic: toggle swipe on zoom
-      img.addEventListener('panzoomchange', () => {
-        const current = panzoom.getScale();
-        const initial = parseFloat(container.dataset.initialScale) || 1;
-        const isZoomedIn = current > initial + 0.01;
-        const swipeLocked = container.dataset.swipeLocked === "true";
-
-        // ✅ Only apply to visible Glide
-        const isVisible = el.classList.contains('glide--visible');
-
-        if (!isVisible) return;
-
-        if (isZoomedIn && !swipeLocked) {
-          swipe.disabled = true;
-          swipe.disable();
-          container.dataset.swipeLocked = "true";
-          console.log(`[${img.src}] Swipe disabled (zoom in)`);
-        } else if (!isZoomedIn && swipeLocked) {
-          swipe.disabled = false;
-          swipe.enable();
-          container.dataset.swipeLocked = "false";
-          console.log(`[${img.src}] Swipe enabled (zoom reset)`);
-        }
-      });
-    }
-
-    if (img.complete) {
-      initPanzoom();
-    } else {
-      img.addEventListener('load', initPanzoom);
-    }
-  });
-
-  // Reset swipe and zoom on slide change
-  glideInstance.on('run.after', () => {
-    el.querySelectorAll('.zoom-container').forEach(container => {
-      const panzoom = container.panzoomInstance;
-      if (panzoom) panzoom.reset();
-      container.dataset.swipeLocked = "false";
+    const pz = Panzoom(img, {
+      maxScale: 4,
+      contain: 'outside',
     });
 
-    swipe.disabled = false;
-    swipe.enable();
-    console.log("Swipe re-enabled (slide change)");
+    let isPanzoomed = false;
+
+    img.addEventListener('dblclick', () => {
+      if (isPanzoomed) {
+        pz.reset();
+        isPanzoomed = false;
+        if (glideEl._glideInstance) glideEl._glideInstance.enable();
+      } else {
+        pz.zoomIn();
+        isPanzoomed = true;
+        if (glideEl._glideInstance) glideEl._glideInstance.disable();
+      }
+    });
+
+    img.parentElement.addEventListener('wheel', pz.zoomWithWheel);
   });
 }
-
-window.setupPanzoomWithSwipeToggle = setupPanzoomWithSwipeToggle;

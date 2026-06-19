@@ -1,32 +1,26 @@
-import pandas as pd
 import os
+import pandas as pd
 
-# Get the directory of this script
+
+# === CONFIGURATION ===
 script_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(script_dir)
+input_excel = os.path.join(script_dir, 'restaurants.xlsx')
+pics_dir = os.path.join(script_dir, 'pics')
 
-# Define the path to the Excel file and the "pics" folder
-excel_file = "restaurants.xlsx"
-pics_dir = os.path.join(script_dir, "pics")
+# === LOAD DATA ===
+df = pd.read_excel(input_excel, header=0)
+df.columns = [str(col).strip().lower().replace(' ', '_') for col in df.columns]
+name_col = df.columns[0]
 
-# Create "pics" directory if it doesn't exist
+# === CREATE FOLDERS ===
 os.makedirs(pics_dir, exist_ok=True)
 
-# Load Excel (assumes first row is header, column 0 = "Name")
-df = pd.read_excel(excel_file, header=0, usecols=[0])
+created = 0
+for name in df[name_col].dropna().unique():
+    folder = os.path.join(pics_dir, str(name))
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+        print(f'  Created: {folder}')
+        created += 1
 
-# Create a folder for each unique restaurant name
-for index, row in df.iterrows():
-    name = str(row["Name"]).strip()
-    if name == "" or pd.isna(name):
-        continue  # Skip blank rows
-
-    folder_path = os.path.join(pics_dir, name)
-
-    if not os.path.exists(folder_path):
-        os.makedirs(folder_path)
-        print(f"📁 Created folder: {folder_path}")
-    else:
-        print(f"✅ Already exists: {folder_path}")
-
-print("\n✅ All image folders checked.")
+print(f'\n✅ Done. {created} new folder(s) created in {pics_dir}')
